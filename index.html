@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>云白服务平台 - 综合公告与用户协议</title>
+    <style>
+        :root {
+            --primary-blue: #3498db;
+            --glass-bg: rgba(255, 255, 255, 0.75); 
+            --anim-speed: 2.0s; 
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body, html { 
+            margin: 0; padding: 0; width: 100%; 
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto; 
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 5vh; 
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: url('https://v2.api.yunbai.icu/api/acg/api.php') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* 背景透明度调高，让背景图更清晰 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(12px); 
+            z-index: 0;
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 2;
+            width: 92%;
+            max-width: 820px;
+            animation: slowFadeIn 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+            padding-bottom: 60px; 
+        }
+
+        @keyframes slowFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .accordion-item {
+            background: var(--glass-bg);
+            margin-bottom: 25px;
+            border-radius: 28px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .accordion-header {
+            padding: 28px 35px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #2c3e50;
+            user-select: none;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+            transition: transform var(--anim-speed) cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--primary-blue);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.98);
+            transition: max-height var(--anim-speed) cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity var(--anim-speed) ease;
+            opacity: 0;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px; /* 展开全量内容 */
+            opacity: 1;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .accordion-item.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .inner-text {
+            padding: 40px 50px;
+        }
+
+        /* 协议文本排版 */
+        .header { text-align: center; margin-bottom: 30px; }
+        h1 { font-size: 20pt; margin: 0; font-weight: bold; color: #2c3e50; }
+        .subtitle { color: #7f8c8d; font-size: 10pt; margin-top: 8px; }
+        h2 { font-size: 13pt; border-left: 5px solid; padding-left: 12px; margin-top: 30px; margin-bottom: 15px; padding-top: 5px; padding-bottom: 5px; }
+        p, li { font-size: 10.5pt; text-align: justify; line-height: 1.7; color: #333; margin-bottom: 12px; }
+        ul, ol { padding-left: 25px; margin-bottom: 15px; }
+        a { color: var(--primary-blue); text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        
+        .warning-box { border: 1px solid #e74c3c; background-color: #fdf2f2; padding: 15px; border-radius: 5px; margin: 20px 0; font-size: 10.5pt; line-height: 1.6;}
+        .warning-title { color: #c0392b; font-weight: bold; margin-bottom: 5px; display: block; }
+        .prohibited-zone { background-color: #fffaf0; border: 1px solid #ffcc80; padding: 18px; margin: 20px 0; border-radius: 4px; }
+        .prohibited-zone strong { color: #e65100; }
+        .warning-red { color: #d32f2f; font-weight: bold; }
+        .info-box { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; margin: 15px 0; border-radius: 4px; font-size: 10.5pt; font-family: monospace; word-break: break-all; }
+        .footer-note { margin-top: 50px; font-size: 9pt; color: #bdc3c7; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
+
+        /* 5个分类的主题色 */
+        .doc-1 h2 { color: #2980b9; border-left-color: #2980b9; background-color: #eff7fd; }
+        .doc-2 h1 { color: #1a237e; } .doc-2 h2 { color: #1a237e; border-left-color: #1a237e; background: #f0f2f5; }
+        .doc-3 h1 { color: #16a085; } .doc-3 h2 { color: #2c3e50; border-left-color: #16a085; background: #f0fdfa; }
+        .doc-4 h1 { color: #8e44ad; } .doc-4 h2 { color: #8e44ad; border-left-color: #8e44ad; background: #f4ecf7; }
+        .doc-5 h1 { color: #d35400; } .doc-5 h2 { color: #d35400; border-left-color: #d35400; background: #fdf2e9; }
+
+        .site-footer {
+            width: 100%;
+            text-align: center;
+            padding: 40px 0;
+            z-index: 2; 
+            color: rgba(0, 0, 0, 0.4);
+            font-size: 10pt;
+            letter-spacing: 1.5px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding-top: 4vh; }
+            .accordion-header { padding: 22px 25px; font-size: 1.1rem; }
+            .inner-text { padding: 25px; }
+            h1 { font-size: 16pt; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <span>1. 家庭宽带(Residential)声明与风险告知</span>
+            <span class="icon">＋</span>
+        </div>
+        <div class="accordion-content doc-1">
+            <div class="inner-text">
+                <div class="header">
+                    <h1>家庭宽带 (Residential IP) 业务声明</h1>
+                    <div class="subtitle">深度声明与购买风险准则</div>
+                </div>
+                <p>由于全球 IPv4 资源的枯竭以及上游数据中心（IDC）针对 IP 库属性的动态调整，目前市场上的“家宽”定义存在极大的灰色地带。为本着绝对坦诚、不套路的原则，作出如下强制性风险告知：</p>
+                
+                <h2>🇩🇪 德国 / 🇬🇧 英国 节点（伪家宽预警）</h2>
+                <p><strong>资源本质：</strong> 目前本站交付的德/英两地“家宽”产品，从底层网络架构上来说，<strong>均为 GTT 线路的“伪家宽”</strong>（即通过特定路由或 IP 广播手段，使数据库将其标记为 Residential，但物理层级仍属于机房）。</p>
+                <p><strong>适用边界：</strong> 仅适用于对 IP 纯净度要求一般的常规业务。如果您从事的是极度严苛的风控业务（如高难度问卷调查、对物理宽带要求极高的金融/电商平台），<strong>请务必谨慎考虑，我们强烈建议您不要盲目下单</strong>。</p>
+
+                <h2>🇺🇸 美国 节点（盲盒属性说明）</h2>
+                <p><strong>真实性免责：</strong> 美国 IP 库的变动极为频繁。对于美国家宽节点的 100% 绝对纯正性，<strong>本平台不做任何无死角的承诺，坦白讲我也无法给出绝对保证</strong>。</p>
+                <p><strong>采购建议：</strong> 请务必利用您自己的专业测试手段进行先行甄别。请在确认能够承受 IP 属性随时波动的潜在风险后再行购买。</p>
+
+                <div class="warning-box">
+                    <span class="warning-title">唯一硬性的服务保障：流媒体解锁</span>
+                    虽然无法保证所有 IP 的绝对原生性，但我方提供唯一的硬性保障协议：<strong>保证流媒体全解锁</strong>。您可以完美流畅地访问包括 Netflix（网飞）、Disney+、Hulu 等主流平台。对线路“纯净风控画像”有极端要求的客户请知悉风险；若主要诉求是解锁流媒体，则可放心使用。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <span>2. 售后服务、技术支持与退款规范</span>
+            <span class="icon">＋</span>
+        </div>
+        <div class="accordion-content doc-2">
+            <div class="inner-text">
+                <div class="header">
+                    <h1>售后服务与技术支持规范</h1>
+                    <div class="subtitle">极速响应通道与退款保障政策</div>
+                </div>
+
+                <h2>优先唯一的紧急联系通道</h2>
+                <p><strong>网站后台工单停用通知：</strong> 本站自带的工单（Ticket）系统目前处于<strong>暂时搁置/不处理状态</strong>。请勿在后台提交工单。</p>
+                <p><strong>直连通道：</strong> 任何业务咨询、机器报障、架构疑问，<strong>请务必直接通过即时通讯工具（IM）联系我本人</strong>。</p>
+                <ul>
+                    <li><strong>QQ / 微信 / 手机 同号：</strong> <code>+44 7749646514</code></li>
+                </ul>
+
+                <h2>极速沟通准则（拒绝无效寒暄）</h2>
+                <p>为了提高解决效率，极度反感并拒绝回复诸如“在吗？”、“服务器挂了”等毫无信息量的碎片化消息。咨询或报障时请务必在第一条消息中包含以下<strong>[故障三要素]</strong>：</p>
+                <ol>
+                    <li><strong>出问题的具体资源：</strong> （例如：具体的 IP 地址或服务器所在机房）</li>
+                    <li><strong>进行了什么操作导致：</strong> （例如：刚修改了 SSH 端口 / 装了某个环境扩展）</li>
+                    <li><strong>具体的报错信息：</strong> （例如：明确的 Error Code 或终端截图）</li>
+                </ol>
+
+                <div class="prohibited-zone">
+                    <strong>💳 严密的退款保障与例外政策 (Product Support)：</strong>
+                    <ul>
+                        <li>✅ <strong>常规产品 24 小时无理由退款：</strong> 常规的云服务器自开通起 <strong>24 小时以内</strong>，如觉得网络表现不符合预期，可申请全额原路退款。</li>
+                        <li>🚫 <strong>特殊业务一经售出概不退款：</strong> 针对 <strong>CDN 流量分发类产品</strong> 以及 <strong>住宅 IP（Residential IP）业务</strong>，由于一经向上游开通成本即被扣除，<strong>没有任何试用期，一经开通/充值，概不接受任何退款申请</strong>。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <span>3. 香港服务器自动 DD 纯净重装指南</span>
+            <span class="icon">＋</span>
+        </div>
+        <div class="accordion-content doc-3">
+            <div class="inner-text">
+                <div class="header">
+                    <h1>系统 DD 纯净重装指南</h1>
+                    <div class="subtitle">适用于云白平台香港机房服务器</div>
+                </div>
+
+                <p><strong>避坑提示：</strong> 本站香港服务器自带的系统模板镜像目前存在一些已知的组件 Bug。为了保障您后续跑业务的绝对稳定，<strong>强烈建议您在控制台首次重装系统后，务必使用 SSH 连入服务器，自己通过一键脚本重新刷入纯净版系统</strong>。</p>
+
+                <h2>第一步：拉取网络重装核心脚本</h2>
+                <p>使用 SSH 工具连接服务器后，输入以下命令并回车拉取脚本：</p>
+                <div class="info-box">
+                    curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh<br>
+                    # 若 curl 报错，可使用备用命令：<br>
+                    # wget -O reinstall.sh https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
+                </div>
+
+                <h2>第二步：执行全自动化重装</h2>
+                <p>请根据您的需求，修改下方代码中的中文提示部分为您自己的参数并执行：</p>
+                <div class="info-box">
+                    bash reinstall.sh 你要装的系统名称 --password 你要设置的复杂密码 --ssh-port 自定义ssh端口
+                </div>
+                <p><strong>举例说明：</strong><br>
+                如果您想重装为 Debian 12，设置密码为 <code>Yunbai@2026!</code>，SSH 端口改为 <code>2222</code>，则命令为：<br>
+                <code>bash reinstall.sh debian-12 --password "Yunbai@2026!" --ssh-port 2222</code></p>
+                <p><em>🔗 支持的完整系统镜像名称列表，请前往官方开源地址查阅：<a href="https://github.com/bin456789/reinstall" target="_blank">点击此处访问</a></em></p>
+
+                <h2>第三步：重启并等待</h2>
+                <p>代码在终端跑完且无报错后，输入 <code>reboot</code> 重启服务器。系统会断开连接并在后台自动进行底层的格式化与重装。通常需等待 10~20 分钟左右，请使用新密码和新端口重新连接即可。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <span>4. 本群专属高压群规与服务边界</span>
+            <span class="icon">＋</span>
+        </div>
+        <div class="accordion-content doc-4">
+            <div class="inner-text">
+                <div class="header">
+                    <h1>群规与技术服务边界</h1>
+                    <div class="subtitle">社群纪律维护与公益项目免打扰协议</div>
+                </div>
+
+                <h2>📢 广告准入双轨制限制</h2>
+                <p>本群并非无门槛的广告广场。如果您想发布各类推广/AFF/接单广告，<strong>必须满足以下两个条件之一</strong>：</p>
+                <ul>
+                    <li><strong>条件一：</strong> 您的 QQ 等级达到 <strong>80 级（皇冠）及以上</strong>的活跃账号。</li>
+                    <li><strong>条件二：</strong> 若等级未达标，必须<strong>提前私聊群主并取得本人的明文同意</strong>。</li>
+                </ul>
+                <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不姑息。</span></p>
+
+                <h2>🛠️ 技术支持边界划分</h2>
+                <p>我个人的精力极其有限，在这里明确划定支持边界：<strong>本人仅对“云平台 yunbai.org 的商业服务器订单、账单、云资源硬件故障”提供一对一的技术支持。</strong></p>
+
+                <div class="warning-box">
+                    <span class="warning-title">⚠️ 公益项目免打扰协议：</span>
+                    旗下所有的“公益项目”，均是我个人利用闲置算力和时间用爱发电搭建的。对于这些公益项目，除遇到导致服务全盘瘫痪的<strong>严重系统 Bug</strong> 允许向我反馈外，其余任何关于“怎么配置”、“为什么连不上本地”、“能不能加功能”等琐碎技术盲区，<strong>请自行使用搜索引擎解决，非严重 Bug 严禁私聊打扰，违者拉黑</strong>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <span>5. 云白生态架构与公益项目矩阵总览</span>
+            <span class="icon">＋</span>
+        </div>
+        <div class="accordion-content doc-5">
+            <div class="inner-text">
+                <div class="header">
+                    <h1>生态架构与项目矩阵</h1>
+                    <div class="subtitle">官方直属业务及公益项目域名汇总</div>
+                </div>
+
+                <p>请大家根据自身的需求，妥善保存并认准以下官方直属的核心商业业务及公益项目的域名地址，请勿访问假冒或劫持网站：</p>
+
+                <h2>📊 核心商用云服务架构</h2>
+                <ul>
+                    <li><strong>云白综合云平台（主站入口）：</strong> <a href="https://yunbai.org" target="_blank">yunbai.org</a></li>
+                    <li><strong>平台用户协议/公告原址：</strong> <a href="https://delightful-pond-062850400.7.azurestaticapps.net/" target="_blank">Azure 静态托管节点</a></li>
+                </ul>
+
+                <h2>🎁 旗下公益项目生态（用爱发电）</h2>
+                <p>请大家珍惜公共资源，合理规范调用，并严格遵守前述的“非 Bug 勿扰”原则：</p>
+                <ul>
+                    <li><strong>公益 QQ 等级代挂系统：</strong> <a href="http://yd.yunbai.icu" target="_blank">yd.yunbai.icu</a> <em>（一键全自动化托管挂级）</em></li>
+                    <li><strong>公益码支付接口平台：</strong> <a href="http://pay.yunbai.icu" target="_blank">pay.yunbai.icu</a> <em>（免费便利的免签聚合支付API）</em></li>
+                    <li><strong class="warning-red">公益 API 接口管理 V1版：</strong> <a href="http://api.yunbai.icu" target="_blank">api.yunbai.icu</a> <em>（⚠️ 老版本架构，目前已全面停止维护）</em></li>
+                    <li><strong>🚀 公益 API 接口管理 V2版：</strong> <a href="http://v2.api.yunbai.icu" target="_blank">v2.api.yunbai.icu</a> <em>（全新维护，涵盖大模型分发、随机 ACG 二次元图等高频接口）</em></li>
+                    <li><strong>公益高清无损免费图床：</strong> <a href="http://nsgr.cn" target="_blank">nsgr.cn</a> <em>（稳定、高速的无偿图片静态托管空间）</em></li>
+                </ul>
+
+                <div class="footer-note">
+                    规矩的建立是为了提供更稳定的服务，感谢大家的配合与支持！祝玩机愉快。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-footer">
+        Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
+    </div>
+
+</div>
+
+<script>
+    const items = document.querySelectorAll('.accordion-item');
+    
+    items.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        header.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            items.forEach(otherItem => {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.icon').innerText = '＋';
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                item.querySelector('.icon').innerText = '－';
+                // 延迟滚动，确保展开动画开始后再平滑对齐
+                setTimeout(() => {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 400);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
