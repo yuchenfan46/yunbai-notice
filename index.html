@@ -319,7 +319,7 @@
                     <li><strong>条件一：</strong> 您的 QQ 群等级达到 <strong>80 级及以上</strong>的活跃账号。</li>
                     <li><strong>条件二：</strong> 若等级未达标，必须<strong>提前私聊群主并取得本人的明文同意</strong>。</li>
                 </ul>
-                <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不息。</span></p>
+                <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不姑息。</span></p>
 
                 <h2>🛠️ 技术支持边界划分</h2>
                 <p>我个人的精力极其有限，在这里明确划定支持边界：<strong>本人仅对“云平台 yunbai.org 的商业服务器订单、账单、云资源硬件故障”提供一对一的技术支持。</strong></p>
@@ -407,6 +407,32 @@
         }
     }
 
+    // 核心工具：防空壳/幽灵数据的万能清洗器
+    function getValidList(responseData, requiredField, statusField) {
+        if (!responseData) return [];
+        
+        let list = [];
+        // 兼容不同接口的返回结构（直接返回数组 vs 对象包裹）
+        if (Array.isArray(responseData)) {
+            list = responseData;
+        } else if (responseData.data !== undefined && Array.isArray(responseData.data)) {
+            list = responseData.data;
+        } else if (responseData[requiredField]) {
+            list = [responseData];
+        } else {
+            return []; // 处理 {code: 0, msg: "无数据"} 等情况
+        }
+
+        // 最核心的护盾过滤：
+        // 1. 过滤空对象/空壳数据 (必须含有我们指定的核心字段)
+        // 2. 状态值 status/state 不能异常 (等于1代表正常)
+        return list.filter(item => {
+            if (!item || !item[requiredField]) return false;
+            if (item[statusField] !== undefined && item[statusField] != 1) return false;
+            return true;
+        });
+    }
+
     // 页面加载完成后并发发起云端API请求
     document.addEventListener("DOMContentLoaded", function() {
         initAccordion();
@@ -424,131 +450,120 @@
             const container = document.getElementById('dynamicContainer');
             let baseIndex = 6; // 固定选项1~5，自第6个选项卡开始渲染
 
-            // ======= 1. 动态公告 模块 =======
-            if (noticeData && (Array.isArray(noticeData) ? noticeData.length > 0 : true)) {
-                const notices = Array.isArray(noticeData) ? noticeData : [noticeData];
-                
-                notices.forEach((notice) => {
-                    if(notice.state && notice.state !== "1") return; 
+            // 经过万能过滤清洗，拿到的绝对是真实、有效的数据（空壳直接变为空数组）
+            const activeNotices = getValidList(noticeData, 'title', 'state');
+            const activeLinks = getValidList(linkData, 'name', 'state');
+            const activeAds = getValidList(adData, 'webname', 'status');
 
-                    const noticeHtml = `
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span>${baseIndex}. ${notice.title}</span>
-                                <span class="icon">＋</span>
-                            </div>
-                            <div class="accordion-content doc-remote">
-                                <div class="inner-text">
-                                    <div class="header">
-                                        <h1>${notice.title}</h1>
-                                        <div class="subtitle">发布时间: ${notice.time || '未知'} | 管理员: ${notice.username || '系统'}</div>
-                                    </div>
-                                    <p>${notice.content.replace(/\n/g, '<br>')}</p>
+            // ======= 1. 动态公告 模块 =======
+            activeNotices.forEach((notice) => {
+                const noticeHtml = `
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>${baseIndex}. ${notice.title}</span>
+                            <span class="icon">＋</span>
+                        </div>
+                        <div class="accordion-content doc-remote">
+                            <div class="inner-text">
+                                <div class="header">
+                                    <h1>${notice.title}</h1>
+                                    <div class="subtitle">发布时间: ${notice.time || '未知'} | 管理员: ${notice.username || '系统'}</div>
                                 </div>
+                                <p>${notice.content.replace(/\n/g, '<br>')}</p>
                             </div>
                         </div>
-                    `;
-                    container.insertAdjacentHTML('beforeend', noticeHtml);
-                    baseIndex++; 
-                });
-            }
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', noticeHtml);
+                baseIndex++; 
+            });
 
             // ======= 2. 友情链接 模块 =======
-            if (linkData && (Array.isArray(linkData) ? linkData.length > 0 : true)) {
-                const links = Array.isArray(linkData) ? linkData : [linkData];
-                const activeLinks = links.filter(link => !link.state || link.state === "1");
-                
-                if (activeLinks.length > 0) {
-                    let linksHtml = '<ul class="link-list">';
-                    activeLinks.forEach(link => {
-                        linksHtml += `
-                            <li>
-                                🔗 <a href="${link.url}" target="_blank">${link.name}</a>
-                                <span class="link-time">添加时间: ${link.time || '未知'}</span>
-                            </li>
-                        `;
-                    });
-                    linksHtml += '</ul>';
+            if (activeLinks.length > 0) {
+                let linksHtml = '<ul class="link-list">';
+                activeLinks.forEach(link => {
+                    linksHtml += `
+                        <li>
+                            🔗 <a href="${link.url}" target="_blank">${link.name}</a>
+                            <span class="link-time">添加时间: ${link.time || '未知'}</span>
+                        </li>
+                    `;
+                });
+                linksHtml += '</ul>';
 
-                    const linkSectionHtml = `
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span>${baseIndex}. 友情链接与合作伙伴</span>
-                                <span class="icon">＋</span>
-                            </div>
-                            <div class="accordion-content doc-link">
-                                <div class="inner-text">
-                                    <div class="header">
-                                        <h1>🤝 友情链接</h1>
-                                        <div class="subtitle">优质资源互换与长期战略合作伙伴</div>
-                                    </div>
-                                    <div class="prohibited-zone" style="background-color: #f8f9fa; border-color: #e9ecef;">
-                                        ${linksHtml}
-                                    </div>
+                const linkSectionHtml = `
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>${baseIndex}. 友情链接与合作伙伴</span>
+                            <span class="icon">＋</span>
+                        </div>
+                        <div class="accordion-content doc-link">
+                            <div class="inner-text">
+                                <div class="header">
+                                    <h1>🤝 友情链接</h1>
+                                    <div class="subtitle">优质资源互换与长期战略合作伙伴</div>
+                                </div>
+                                <div class="prohibited-zone" style="background-color: #f8f9fa; border-color: #e9ecef;">
+                                    ${linksHtml}
                                 </div>
                             </div>
                         </div>
-                    `;
-                    container.insertAdjacentHTML('beforeend', linkSectionHtml);
-                    baseIndex++;
-                }
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', linkSectionHtml);
+                baseIndex++;
             }
 
-            // ======= 3. 独家赞助广告 模块 (全字段逻辑优化版) =======
-            if (adData && adData.code === "1" && Array.isArray(adData.data) && adData.data.length > 0) {
-                // 筛选出 status 为 1（正常）的广告数据
-                const activeAds = adData.data.filter(ad => !ad.status || ad.status === "1" || ad.status === 1);
+            // ======= 3. 独家赞助广告 模块 =======
+            if (activeAds.length > 0) {
+                let adsHtml = '<div class="ad-list">';
                 
-                if (activeAds.length > 0) {
-                    let adsHtml = '<div class="ad-list">';
+                activeAds.forEach(ad => {
+                    // 逻辑：优先获取跳转地址 jump_url，若为空则拿 url 兜底
+                    const finalJumpUrl = ad.jump_url || ad.url || '#';
                     
-                    activeAds.forEach(ad => {
-                        // 逻辑：优先获取跳转地址 jump_url，若为空则拿 url 兜底
-                        const finalJumpUrl = ad.jump_url || ad.url || '#';
-                        
-                        // 识别创建者：有 username 字段则显示，无则看 user_id 是否为 0 (0为后台管理员)
-                        let creator = ad.username || (ad.user_id === "0" || ad.user_id === 0 ? '后台管理员' : `用户ID:${ad.user_id}`);
+                    // 识别创建者：有 username 字段则显示，无则看 user_id
+                    let creator = ad.username || (ad.user_id == "0" ? '后台管理员' : `用户ID:${ad.user_id || '未知'}`);
 
-                        adsHtml += `
-                            <div class="ad-item" data-ad-id="${ad.id || ''}" data-ad-type="${ad.type || '1'}">
-                                <div class="ad-title-row">
-                                    <span>🔗 ${ad.webname || '未命名广告'}</span>
-                                    <div class="ad-meta">
-                                        <span>发布者: ${creator}</span> | 
-                                        <span>时间: ${ad.date || '未知'}</span>
-                                    </div>
+                    adsHtml += `
+                        <div class="ad-item">
+                            <div class="ad-title-row">
+                                <span>🔗 ${ad.webname}</span>
+                                <div class="ad-meta">
+                                    <span>发布者: ${creator}</span> | 
+                                    <span>时间: ${ad.date || '未知'}</span>
                                 </div>
-                                ${ad.introduction ? `<p class="ad-intro">${ad.introduction}</p>` : ''}
-                                
-                                <a href="${finalJumpUrl}" target="_blank" class="ad-jump-btn">
-                                    点我跳转 ➔
-                                </a>
                             </div>
-                        `;
-                    });
-                    adsHtml += '</div>';
+                            ${ad.introduction ? `<p class="ad-intro">${ad.introduction}</p>` : ''}
+                            
+                            <a href="${finalJumpUrl}" target="_blank" class="ad-jump-btn">
+                                点我跳转 ➔
+                            </a>
+                        </div>
+                    `;
+                });
+                adsHtml += '</div>';
 
-                    const adSectionHtml = `
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span>${baseIndex}. 独家赞助与推荐项目</span>
-                                <span class="icon">＋</span>
-                            </div>
-                            <div class="accordion-content doc-ad">
-                                <div class="inner-text">
-                                    <div class="header">
-                                        <h1>🎈 赞助商与优秀项目推荐</h1>
-                                        <div class="subtitle">商业广告合作及精选优质站长业务</div>
-                                    </div>
-                                    <div class="prohibited-zone" style="background-color: #fdfaf2; border-color: #f5e7c4;">
-                                        ${adsHtml}
-                                    </div>
+                const adSectionHtml = `
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>${baseIndex}. 独家赞助与推荐项目</span>
+                            <span class="icon">＋</span>
+                        </div>
+                        <div class="accordion-content doc-ad">
+                            <div class="inner-text">
+                                <div class="header">
+                                    <h1>🎈 赞助商与优秀项目推荐</h1>
+                                    <div class="subtitle">商业广告合作及精选优质站长业务</div>
+                                </div>
+                                <div class="prohibited-zone" style="background-color: #fdfaf2; border-color: #f5e7c4;">
+                                    ${adsHtml}
                                 </div>
                             </div>
                         </div>
-                    `;
-                    container.insertAdjacentHTML('beforeend', adSectionHtml);
-                }
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', adSectionHtml);
             }
 
             // 完成动态组件结构注入后，统一重置手风琴，维持动效
