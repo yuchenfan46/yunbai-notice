@@ -30,7 +30,6 @@
             background-size: cover;
         }
 
-        /* 背景透明度调高，让背景图更清晰 */
         body::before {
             content: '';
             position: fixed;
@@ -92,7 +91,7 @@
         }
 
         .accordion-item.active .accordion-content {
-            max-height: 5000px; /* 展开全量内容 */
+            max-height: 5000px; 
             opacity: 1;
             border-top: 1px solid rgba(0,0,0,0.05);
         }
@@ -129,6 +128,49 @@
         .doc-3 h1 { color: #16a085; } .doc-3 h2 { color: #2c3e50; border-left-color: #16a085; background: #f0fdfa; }
         .doc-4 h1 { color: #8e44ad; } .doc-4 h2 { color: #8e44ad; border-left-color: #8e44ad; background: #f4ecf7; }
         .doc-5 h1 { color: #d35400; } .doc-5 h2 { color: #d35400; border-left-color: #d35400; background: #fdf2e9; }
+        
+        /* 远程动态公告样式 */
+        .doc-remote h1 { color: #e67e22; }
+        .doc-remote h2 { color: #e67e22; border-left-color: #e67e22; background: #fdf6f0; }
+
+        /* 友情链接样式 */
+        .doc-link h1 { color: #27ae60; }
+        .doc-link .link-list { list-style: none; padding: 0; margin: 0; }
+        .doc-link .link-list li { margin-bottom: 12px; font-size: 11pt; border-bottom: 1px dashed #eee; padding-bottom: 8px; }
+        .doc-link .link-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .doc-link .link-time { font-size: 9pt; color: #95a5a6; float: right; }
+
+        /* 独家赞助广告样式 */
+        .doc-ad h1 { color: #e74c3c; }
+        .ad-list { display: flex; flex-direction: column; gap: 20px; }
+        .ad-item { border-bottom: 1px dashed #e0e0e0; padding-bottom: 16px; position: relative; }
+        .ad-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .ad-title-row { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 11.5pt; color: #2c3e50; }
+        .ad-meta { font-size: 8.5pt; color: #95a5a6; font-weight: normal; margin-top: 2px; }
+        .ad-intro { font-size: 10pt; color: #555; margin: 8px 0 10px 24px; line-height: 1.6; text-align: justify; }
+        
+        /* 独家定制的 点我跳转 按钮样式 */
+        .ad-jump-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e74c3c;
+            color: #fff !important;
+            padding: 5px 14px;
+            font-size: 9.5pt;
+            font-weight: bold;
+            border-radius: 50px;
+            margin-left: 24px;
+            text-decoration: none !important;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+        }
+        .ad-jump-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+        .ad-jump-btn:active {
+            transform: translateY(0);
+        }
 
         .site-footer {
             width: 100%;
@@ -145,12 +187,14 @@
             .accordion-header { padding: 22px 25px; font-size: 1.1rem; }
             .inner-text { padding: 25px; }
             h1 { font-size: 16pt; }
+            .ad-title-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .ad-meta { margin-left: 24px; }
         }
     </style>
 </head>
 <body>
 
-<div class="main-container">
+<div class="main-container" id="mainContainer">
 
     <div class="accordion-item">
         <div class="accordion-header">
@@ -252,7 +296,7 @@
                 <p><em>🔗 支持的完整系统镜像名称列表，请前往官方开源地址查阅：<a href="https://github.com/bin456789/reinstall" target="_blank">点击此处访问</a></em></p>
 
                 <h2>第三步：重启并等待</h2>
-                <p>代码在终端跑完且无报错后，输入 <code>reboot</code> 重启服务器。系统会断开连接并在后台自动进行底层的格式化与重装。通常需等待 10~20 分钟左右，请使用新密码和新端口重新连接即可。</p>
+                <p>代码在终端跑完且无报错后，输入 <code>reboot</code> 重启服务器。系统会断开连接并在后台自动进行底层的格式化与重装。通常需等待 10~20 分钟左右，请使用新密码 and 新端口重新连接即可。</p>
             </div>
         </div>
     </div>
@@ -275,7 +319,7 @@
                     <li><strong>条件一：</strong> 您的 QQ 群等级达到 <strong>80 级及以上</strong>的活跃账号。</li>
                     <li><strong>条件二：</strong> 若等级未达标，必须<strong>提前私聊群主并取得本人的明文同意</strong>。</li>
                 </ul>
-                <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不姑息。</span></p>
+                <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不息。</span></p>
 
                 <h2>🛠️ 技术支持边界划分</h2>
                 <p>我个人的精力极其有限，在这里明确划定支持边界：<strong>本人仅对“云平台 yunbai.org 的商业服务器订单、账单、云资源硬件故障”提供一对一的技术支持。</strong></p>
@@ -325,6 +369,8 @@
         </div>
     </div>
 
+    <div id="dynamicContainer"></div>
+
     <div class="site-footer">
         Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
     </div>
@@ -332,26 +378,181 @@
 </div>
 
 <script>
-    const items = document.querySelectorAll('.accordion-item');
-    
-    items.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-        header.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            items.forEach(otherItem => {
-                otherItem.classList.remove('active');
-                otherItem.querySelector('.icon').innerText = '＋';
-            });
+    // 绑定与重置手风琴折叠事件
+    function initAccordion() {
+        const items = document.querySelectorAll('.accordion-item');
+        items.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.removeEventListener('click', handleAccordionClick);
+            header.addEventListener('click', handleAccordionClick);
+        });
+    }
 
-            if (!isActive) {
-                item.classList.add('active');
-                item.querySelector('.icon').innerText = '－';
-                // 延迟滚动，确保展开动画开始后再平滑对齐
-                setTimeout(() => {
-                    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 400);
+    function handleAccordionClick(e) {
+        const item = e.currentTarget.parentElement;
+        const items = document.querySelectorAll('.accordion-item');
+        const isActive = item.classList.contains('active');
+        
+        items.forEach(otherItem => {
+            otherItem.classList.remove('active');
+            otherItem.querySelector('.icon').innerText = '＋';
+        });
+
+        if (!isActive) {
+            item.classList.add('active');
+            item.querySelector('.icon').innerText = '－';
+            setTimeout(() => {
+                item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 400);
+        }
+    }
+
+    // 页面加载完成后并发发起云端API请求
+    document.addEventListener("DOMContentLoaded", function() {
+        initAccordion();
+
+        const noticeUrl = "https://auth.yunbai.icu/api/Index/notice?appid=4&webkey=23820DCC509A6F75849B";
+        const linkUrl = "https://auth.yunbai.icu/api/Index/linklist?webkey=23820DCC509A6F75849B";
+        const adUrl = "https://auth.yunbai.icu/api/Index/getAdList?type=1&appid=4&webkey=23820DCC509A6F75849B";
+        
+        Promise.all([
+            fetch(noticeUrl).then(res => res.json()).catch(() => null),
+            fetch(linkUrl).then(res => res.json()).catch(() => null),
+            fetch(adUrl).then(res => res.json()).catch(() => null)
+        ]).then(([noticeData, linkData, adData]) => {
+            
+            const container = document.getElementById('dynamicContainer');
+            let baseIndex = 6; // 固定选项1~5，自第6个选项卡开始渲染
+
+            // ======= 1. 动态公告 模块 =======
+            if (noticeData && (Array.isArray(noticeData) ? noticeData.length > 0 : true)) {
+                const notices = Array.isArray(noticeData) ? noticeData : [noticeData];
+                
+                notices.forEach((notice) => {
+                    if(notice.state && notice.state !== "1") return; 
+
+                    const noticeHtml = `
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>${baseIndex}. ${notice.title}</span>
+                                <span class="icon">＋</span>
+                            </div>
+                            <div class="accordion-content doc-remote">
+                                <div class="inner-text">
+                                    <div class="header">
+                                        <h1>${notice.title}</h1>
+                                        <div class="subtitle">发布时间: ${notice.time || '未知'} | 管理员: ${notice.username || '系统'}</div>
+                                    </div>
+                                    <p>${notice.content.replace(/\n/g, '<br>')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', noticeHtml);
+                    baseIndex++; 
+                });
             }
+
+            // ======= 2. 友情链接 模块 =======
+            if (linkData && (Array.isArray(linkData) ? linkData.length > 0 : true)) {
+                const links = Array.isArray(linkData) ? linkData : [linkData];
+                const activeLinks = links.filter(link => !link.state || link.state === "1");
+                
+                if (activeLinks.length > 0) {
+                    let linksHtml = '<ul class="link-list">';
+                    activeLinks.forEach(link => {
+                        linksHtml += `
+                            <li>
+                                🔗 <a href="${link.url}" target="_blank">${link.name}</a>
+                                <span class="link-time">添加时间: ${link.time || '未知'}</span>
+                            </li>
+                        `;
+                    });
+                    linksHtml += '</ul>';
+
+                    const linkSectionHtml = `
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>${baseIndex}. 友情链接与合作伙伴</span>
+                                <span class="icon">＋</span>
+                            </div>
+                            <div class="accordion-content doc-link">
+                                <div class="inner-text">
+                                    <div class="header">
+                                        <h1>🤝 友情链接</h1>
+                                        <div class="subtitle">优质资源互换与长期战略合作伙伴</div>
+                                    </div>
+                                    <div class="prohibited-zone" style="background-color: #f8f9fa; border-color: #e9ecef;">
+                                        ${linksHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', linkSectionHtml);
+                    baseIndex++;
+                }
+            }
+
+            // ======= 3. 独家赞助广告 模块 (全字段逻辑优化版) =======
+            if (adData && adData.code === "1" && Array.isArray(adData.data) && adData.data.length > 0) {
+                // 筛选出 status 为 1（正常）的广告数据
+                const activeAds = adData.data.filter(ad => !ad.status || ad.status === "1" || ad.status === 1);
+                
+                if (activeAds.length > 0) {
+                    let adsHtml = '<div class="ad-list">';
+                    
+                    activeAds.forEach(ad => {
+                        // 逻辑：优先获取跳转地址 jump_url，若为空则拿 url 兜底
+                        const finalJumpUrl = ad.jump_url || ad.url || '#';
+                        
+                        // 识别创建者：有 username 字段则显示，无则看 user_id 是否为 0 (0为后台管理员)
+                        let creator = ad.username || (ad.user_id === "0" || ad.user_id === 0 ? '后台管理员' : `用户ID:${ad.user_id}`);
+
+                        adsHtml += `
+                            <div class="ad-item" data-ad-id="${ad.id || ''}" data-ad-type="${ad.type || '1'}">
+                                <div class="ad-title-row">
+                                    <span>🔗 ${ad.webname || '未命名广告'}</span>
+                                    <div class="ad-meta">
+                                        <span>发布者: ${creator}</span> | 
+                                        <span>时间: ${ad.date || '未知'}</span>
+                                    </div>
+                                </div>
+                                ${ad.introduction ? `<p class="ad-intro">${ad.introduction}</p>` : ''}
+                                
+                                <a href="${finalJumpUrl}" target="_blank" class="ad-jump-btn">
+                                    点我跳转 ➔
+                                </a>
+                            </div>
+                        `;
+                    });
+                    adsHtml += '</div>';
+
+                    const adSectionHtml = `
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>${baseIndex}. 独家赞助与推荐项目</span>
+                                <span class="icon">＋</span>
+                            </div>
+                            <div class="accordion-content doc-ad">
+                                <div class="inner-text">
+                                    <div class="header">
+                                        <h1>🎈 赞助商与优秀项目推荐</h1>
+                                        <div class="subtitle">商业广告合作及精选优质站长业务</div>
+                                    </div>
+                                    <div class="prohibited-zone" style="background-color: #fdfaf2; border-color: #f5e7c4;">
+                                        ${adsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', adSectionHtml);
+                }
+            }
+
+            // 完成动态组件结构注入后，统一重置手风琴，维持动效
+            initAccordion();
         });
     });
 </script>
