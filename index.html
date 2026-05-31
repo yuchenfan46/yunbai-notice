@@ -396,7 +396,6 @@
 </head>
 <body>
 
-    <!-- 第一屏：感谢/记事卡片 -->
     <div id="welcome-section">
         <div class="glass-container">
             <header class="header">
@@ -454,7 +453,6 @@
         </div>
     </div>
 
-    <!-- 第二屏：原公告手风琴内容 -->
     <div id="announcement-section">
         <div class="main-container" id="mainContainer">
 
@@ -631,7 +629,6 @@
                 </div>
             </div>
 
-            <!-- 动态注入节点位置 -->
             <div id="dynamicContainer"></div>
 
             <div class="site-footer">
@@ -641,14 +638,74 @@
         </div>
     </div>
 
-    <!-- 外部公共美化特效组件脚本 -->
     <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/aixin.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/yinghua.js"></script>
     <span class="js-cursor-container"></span>
     <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/xiaoxingxing.js"></script>
 
-    <!-- 逻辑控制业务脚本 -->
     <script>
+        (function () {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', e => {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(e.key.toUpperCase())) || 
+                    (e.ctrlKey && e.key.toLowerCase() === 'u')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            function triggerPunishment() {
+                try {
+                    document.body.innerHTML = '<div style="color:#fff; background:#000; width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; font-size:2rem; font-family:sans-serif;">⚠️ 检测到非法调试，拒绝访问。</div>';
+                } catch (_) {}
+                
+                setInterval(function () {
+                    debugger;
+                }, 50);
+
+                setTimeout(() => {
+                    window.location.href = "about:blank";
+                }, 3000);
+            }
+
+            const spy = new Image();
+            Object.defineProperty(spy, 'id', {
+                get: function () {
+                    triggerPunishment();
+                    throw new Error("Anti-Debug Triggered");
+                }
+            });
+
+            setInterval(() => {
+                console.log(spy);
+                console.clear(); 
+            }, 200);
+
+            const threshold = 160;
+            setInterval(() => {
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                if (widthThreshold || heightThreshold) {
+                    // 排除用户单纯缩放窗口或双屏放大的情况
+                    if (window.outerWidth > 0 && window.outerHeight > 0) {
+                        triggerPunishment();
+                    }
+                }
+            }, 500);
+
+            const checkFormat = function() {
+                const validate = function() { return 'dev'; };
+                if (!/^\s*function\s*\(\s*\)\s*\{\s*\[native code\]\s*\}\s*$/.test(validate.toString)) {
+                    // 说明代码被动过或者格式化了
+                    triggerPunishment();
+                }
+            };
+            checkFormat();
+        })();
+        
+
+
         // 绑定与重置手风琴折叠事件
         function initAccordion() {
             const items = document.querySelectorAll('.accordion-item');
