@@ -507,9 +507,9 @@
                         <h2>极速沟通准则（拒绝无效寒暄）</h2>
                         <p>为了提高解决效率，极度反感并拒绝回复诸如“在吗？”、“服务器挂了”等毫无信息量的碎片化消息。咨询或报障时请务必在第一条消息中包含以下<strong>[故障三要素]</strong>：</p>
                         <ol>
-                            <li><strong>出问题的具体资源：</strong> （例如：具体的 IP 地址或服务器所在机房）</li>
-                            <li><strong>进行了什么操作导致：</strong> （例如：刚修改了 SSH 端口 / 装了某个环境扩展）</li>
-                            <li><strong>具体的报错信息：</strong> （例如：明确的 Error Code 或终端截图）</li>
+                            <li><strong>出问题的具体资源：</strong> （example：具体的 IP 地址或服务器所在机房）</li>
+                            <li><strong>进行了什么操作导致：</strong> （example：刚修改了 SSH 端口 / 装了某个环境扩展）</li>
+                            <li><strong>具体的报错信息：</strong> （example：明确的 Error Code 或终端截图）</li>
                         </ol>
 
                         <div class="prohibited-zone">
@@ -586,7 +586,7 @@
 
                         <div class="warning-box">
                             <span class="warning-title">⚠️ 公益项目免打扰协议：</span>
-                            旗下所有的“公益项目”，均是我个人利用闲置算力和时间用爱发电搭建的。对于这些公益项目，除遇到导致服务全盘瘫痪的<strong>严重系统 Bug</strong> 允许向我反馈外，其余任何关于“怎么配置”、“为什么连不上本地”、“能不能加功能”等琐碎技术盲区，<strong>请自行使用搜索引擎解决，非严重 Bug 严禁私聊打扰，违者拉黑</strong>。
+                            旗下所有的“公益项目”，均是我个人利用闲置算力和时间用爱发电搭建的。对于这些公益项目，除遇到导致服务全盘瘫痪的<strong>严重 system Bug</strong> 允许向我反馈外，其余任何关于“怎么配置”、“为什么连不上本地”、“能不能加功能”等琐碎技术盲区，<strong>请自行使用搜索引擎解决，非严重 Bug 严禁私聊打扰，违者拉黑</strong>。
                         </div>
                     </div>
                 </div>
@@ -646,67 +646,28 @@
     <script>
         (function () {
             document.addEventListener('contextmenu', e => e.preventDefault());
+            
             document.addEventListener('keydown', e => {
-                if (e.key === 'F12' || 
+                if (
+                    e.key === 'F12' || 
                     (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(e.key.toUpperCase())) || 
-                    (e.ctrlKey && e.key.toLowerCase() === 'u')) {
+                    (e.ctrlKey && ['U', 'S', 'u', 's'].includes(e.key))
+                ) {
                     e.preventDefault();
                     return false;
                 }
             });
 
-            function triggerPunishment() {
-                try {
-                    document.body.innerHTML = '<div style="color:#fff; background:#000; width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; font-size:2rem; font-family:sans-serif;">⚠️ 检测到非法调试，拒绝访问。</div>';
-                } catch (_) {}
-                
-                setInterval(function () {
-                    debugger;
-                }, 50);
-
-                setTimeout(() => {
-                    window.location.href = "about:blank";
-                }, 3000);
-            }
-
-            const spy = new Image();
-            Object.defineProperty(spy, 'id', {
-                get: function () {
-                    triggerPunishment();
-                    throw new Error("Anti-Debug Triggered");
+            const antiDebug = function () {
+                function runDebugger() {
+                    (function () {}).constructor("debugger")();
                 }
-            });
-
-            setInterval(() => {
-                console.log(spy);
-                console.clear(); 
-            }, 200);
-
-            const threshold = 160;
-            setInterval(() => {
-                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-                if (widthThreshold || heightThreshold) {
-                    // 排除用户单纯缩放窗口或双屏放大的情况
-                    if (window.outerWidth > 0 && window.outerHeight > 0) {
-                        triggerPunishment();
-                    }
-                }
-            }, 500);
-
-            const checkFormat = function() {
-                const validate = function() { return 'dev'; };
-                if (!/^\s*function\s*\(\s*\)\s*\{\s*\[native code\]\s*\}\s*$/.test(validate.toString)) {
-                    // 说明代码被动过或者格式化了
-                    triggerPunishment();
-                }
+                setInterval(runDebugger, 200);
             };
-            checkFormat();
+            try { antiDebug(); } catch (err) {}
         })();
-        
 
 
-        // 绑定与重置手风琴折叠事件
         function initAccordion() {
             const items = document.querySelectorAll('.accordion-item');
             items.forEach(item => {
