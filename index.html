@@ -6,37 +6,215 @@
     <title>云白服务平台 - 综合公告与用户协议</title>
     <style>
         :root {
+            /* 1. 感谢名单/记事卡片 专用变量 */
+            --card-glass-bg: rgba(255, 255, 255, 0.07);
+            --card-glass-border: rgba(255, 255, 255, 0.15);
+            --card-text-main: #ffffff;
+            --card-text-dim: rgba(255, 255, 255, 0.65);
+            --card-accent: #7dd3fc;
+            --card-font-main: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+            /* 2. 公告与协议 专用变量 */
             --primary-blue: #3498db;
-            --glass-bg: rgba(255, 255, 255, 0.75); 
+            --acc-glass-bg: rgba(255, 255, 255, 0.75); 
             --anim-speed: 2.0s; 
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
         
         body, html { 
-            margin: 0; padding: 0; width: 100%; 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
             min-height: 100%;
             overflow-x: hidden;
             overflow-y: auto; 
+            scroll-behavior: smooth;
         }
 
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 5vh; 
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background: url('https://v2.api.yunbai.icu/api/acg/api.php') no-repeat center center fixed;
             background-size: cover;
         }
 
-        body::before {
-            content: '';
+        /* [修复核心] 1. 全局暗色暗化遮罩，让上下两屏的背景底色绝对一致 */
+        body::after {
+            content: "";
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(12px); 
-            z-index: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 全局噪点纹理增加高级感 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.06;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           第一屏：感谢名单/记事卡片 区块
+           ========================================= */
+        #welcome-section {
+            position: relative;
+            height: 100dvh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .glass-container {
+            position: relative;
+            z-index: 10; 
+            width: 90%;
+            max-width: 440px;
+            height: 85dvh;
+            background: var(--card-glass-bg);
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            border: 1px solid var(--card-glass-border);
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            color: var(--card-text-main);
+        }
+
+        .glass-container .header {
+            padding: 40px 30px 20px;
+            flex-shrink: 0;
+            text-align: left;
+            margin-bottom: 0;
+        }
+
+        .glass-container .header h1 {
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 0;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff 0%, var(--card-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--card-accent);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 30px 40px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch; 
+            mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+        }
+
+        .scroll-content::-webkit-scrollbar { display: none; }
+
+        .glass-container section { margin-top: 30px; }
+
+        .glass-container h2 {
+            font-size: 0.85rem;
+            color: var(--card-text-dim);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border-left: none;
+            padding-left: 0;
+            background: none;
+            margin-top: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .glass-container h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-left: 12px;
+        }
+
+        .about-p {
+            line-height: 1.8;
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .about-p p { margin-bottom: 18px; text-align: left;}
+
+        .highlight { color: var(--card-accent); font-weight: 500; }
+
+        .list-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--card-text-main);
+            padding: 18px 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-glass-border);
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+
+        .list-item:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-container .footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--card-text-dim);
+            letter-spacing: 2px;
+            flex-shrink: 0;
+            font-style: italic;
+        }
+
+
+        /* =========================================
+           第二屏：综合公告与用户协议 区块
+           ========================================= */
+        #announcement-section {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding-top: 2vh; 
+            /* [修复核心] 2. 改为完全透明，不加整体毛玻璃，消灭生硬的白色切线 */
+            background: transparent; 
+            backdrop-filter: none; 
+            -webkit-backdrop-filter: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .main-container {
@@ -54,12 +232,13 @@
         }
 
         .accordion-item {
-            background: var(--glass-bg);
+            background: var(--acc-glass-bg);
             margin-bottom: 25px;
             border-radius: 28px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.15);
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
@@ -104,25 +283,25 @@
             padding: 40px 50px;
         }
 
-        /* 协议文本排版 */
-        .header { text-align: center; margin-bottom: 30px; }
-        h1 { font-size: 20pt; margin: 0; font-weight: bold; color: #2c3e50; }
-        .subtitle { color: #7f8c8d; font-size: 10pt; margin-top: 8px; }
-        h2 { font-size: 13pt; border-left: 5px solid; padding-left: 12px; margin-top: 30px; margin-bottom: 15px; padding-top: 5px; padding-bottom: 5px; }
-        p, li { font-size: 10.5pt; text-align: justify; line-height: 1.7; color: #333; margin-bottom: 12px; }
-        ul, ol { padding-left: 25px; margin-bottom: 15px; }
-        a { color: var(--primary-blue); text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
+        /* 隔离协议文本排版，防止污染第一屏卡片 */
+        .inner-text .header { text-align: center; margin-bottom: 30px; }
+        .inner-text h1 { font-size: 20pt; margin: 0; font-weight: bold; color: #2c3e50; }
+        .inner-text .subtitle { color: #7f8c8d; font-size: 10pt; margin-top: 8px; }
+        .inner-text h2 { font-size: 13pt; border-left: 5px solid; padding-left: 12px; margin-top: 30px; margin-bottom: 15px; padding-top: 5px; padding-bottom: 5px; font-weight: bold; display: block; letter-spacing: normal;}
+        .inner-text p, .inner-text li { font-size: 10.5pt; text-align: justify; line-height: 1.7; color: #333; margin-bottom: 12px; }
+        .inner-text ul, .inner-text ol { padding-left: 25px; margin-bottom: 15px; color: #333;}
+        .inner-text a { color: var(--primary-blue); text-decoration: none; font-weight: bold; }
+        .inner-text a:hover { text-decoration: underline; }
         
         .warning-box { border: 1px solid #e74c3c; background-color: #fdf2f2; padding: 15px; border-radius: 5px; margin: 20px 0; font-size: 10.5pt; line-height: 1.6;}
         .warning-title { color: #c0392b; font-weight: bold; margin-bottom: 5px; display: block; }
         .prohibited-zone { background-color: #fffaf0; border: 1px solid #ffcc80; padding: 18px; margin: 20px 0; border-radius: 4px; }
         .prohibited-zone strong { color: #e65100; }
         .warning-red { color: #d32f2f; font-weight: bold; }
-        .info-box { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; margin: 15px 0; border-radius: 4px; font-size: 10.5pt; font-family: monospace; word-break: break-all; }
+        .info-box { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; margin: 15px 0; border-radius: 4px; font-size: 10.5pt; font-family: monospace; word-break: break-all; color: #333;}
         .footer-note { margin-top: 50px; font-size: 9pt; color: #bdc3c7; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
 
-        /* 5个分类的主题色 */
+        /* 分类主题色扩展配置 */
         .doc-1 h2 { color: #2980b9; border-left-color: #2980b9; background-color: #eff7fd; }
         .doc-2 h1 { color: #1a237e; } .doc-2 h2 { color: #1a237e; border-left-color: #1a237e; background: #f0f2f5; }
         .doc-3 h1 { color: #16a085; } .doc-3 h2 { color: #2c3e50; border-left-color: #16a085; background: #f0fdfa; }
@@ -149,7 +328,6 @@
         .ad-meta { font-size: 8.5pt; color: #95a5a6; font-weight: normal; margin-top: 2px; }
         .ad-intro { font-size: 10pt; color: #555; margin: 8px 0 10px 24px; line-height: 1.6; text-align: justify; }
         
-        /* 独家定制的 点我跳转 按钮样式 */
         .ad-jump-btn {
             display: inline-flex;
             align-items: center;
@@ -177,16 +355,40 @@
             text-align: center;
             padding: 40px 0;
             z-index: 2; 
-            color: rgba(0, 0, 0, 0.4);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 10pt;
             letter-spacing: 1.5px;
         }
 
+        /* =========================================
+           网页特效层级锁定修复
+           ========================================= */
+        #yinghua {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 99999 !important; 
+            pointer-events: none !important; 
+        }
+
+        .js-cursor-container {
+            position: fixed !important;
+            z-index: 100000 !important; 
+            pointer-events: none !important;
+        }
+
+        canvas {
+            position: fixed;
+            z-index: 99998; 
+            pointer-events: none;
+        }
+
         @media (max-width: 600px) {
-            body { padding-top: 4vh; }
             .accordion-header { padding: 22px 25px; font-size: 1.1rem; }
             .inner-text { padding: 25px; }
-            h1 { font-size: 16pt; }
+            .inner-text h1 { font-size: 16pt; }
             .ad-title-row { flex-direction: column; align-items: flex-start; gap: 4px; }
             .ad-meta { margin-left: 24px; }
         }
@@ -194,383 +396,443 @@
 </head>
 <body>
 
-<div class="main-container" id="mainContainer">
+    <!-- 第一屏：感谢/记事卡片 -->
+    <div id="welcome-section">
+        <div class="glass-container">
+            <header class="header">
+                <h1>YUNBAI</h1>
+                <div class="tagline">From Interest to Practice</div>
+            </header>
 
-    <div class="accordion-item">
-        <div class="accordion-header">
-            <span>1. 家庭宽带(Residential)声明与风险告知</span>
-            <span class="icon">＋</span>
-        </div>
-        <div class="accordion-content doc-1">
-            <div class="inner-text">
-                <div class="header">
-                    <h1>家庭宽带 (Residential IP) 业务声明</h1>
-                    <div class="subtitle">深度声明与购买风险准则</div>
-                </div>
-                <p>由于全球 IPv4 资源的枯竭以及上游数据中心（IDC）针对 IP 库属性的动态调整，目前市场上的“家宽”定义存在极大的灰色地带。为本着绝对坦诚、不套路的原则，作出如下强制性风险告知：</p>
-                
-                <h2>🇩🇪 德国 / 🇬🇧 英国 节点（伪家宽预警）</h2>
-                <p><strong>资源本质：</strong> 目前本站交付的德/英两地“家宽”产品，从底层网络架构上来说，<strong>均为 GTT 线路的“伪家宽”</strong>（即通过特定路由或 IP 广播手段，使数据库将其标记为 Residential，但物理层级仍属于机房）。</p>
-                <p><strong>适用边界：</strong> 仅适用于对 IP 纯净度要求一般的常规业务。如果您从事的是极度严苛的风控业务（如高难度问卷调查、对物理宽带要求极高的金融/电商平台），<strong>请务必谨慎考虑，我们强烈建议您不要盲目下单</strong>。</p>
+            <div class="scroll-content">
+                <section>
+                    <h2>JOURNEY / 记事</h2>
+                    <div class="about-p">
+                        <p>
+                            故事开始于 <span class="highlight">2024 年 8 月 20 日</span>。
+                        </p>
+                        <p>
+                            那天刷到的第一个建站视频，像是一把钥匙，打开了代码世界的大门。在技校的学习时光里，我没有那种按部就班的束缚，反而有更多的时间去钻研那些真正让我着迷的技术。
+                        </p>
+                        <p>
+                            从对着视频敲下第一行代码，到 <span class="highlight">2025 年 9 月</span> 亲手让云白（yunbai）云平台上线。我习惯在实操中寻找答案，在 Oracle 节点和 API 接口的博弈中，构筑出这片属于自己的天地。
+                        </p>
+                        <p>
+                            技术对我而言，是技能，更是热爱。感谢这一路上给予我启发和支持的每一位，感谢所有陪伴云白成长的你们。
+                        </p>
+                        <p style="text-align: center; opacity: 0.8; font-size: 0.85rem;">
+                            —— 特别鸣谢下列名单，致敬所有人。
+                        </p>
+                    </div>
+                </section>
 
-                <h2>🇺🇸 美国 节点（盲盒属性说明）</h2>
-                <p><strong>真实性免责：</strong> 美国 IP 库的变动极为频繁。对于美国家宽节点的 100% 绝对纯正性，<strong>本平台不做任何无死角的承诺，坦白讲我也无法给出绝对保证</strong>。</p>
-                <p><strong>采购建议：</strong> 请务必利用您自己的专业测试手段进行先行甄别。请在确认能够承受 IP 属性随时波动的潜在风险后再行购买。</p>
-
-                <div class="warning-box">
-                    <span class="warning-title">唯一硬性的服务保障：流媒体解锁</span>
-                    虽然无法保证所有 IP 的绝对原生性，但我方提供唯一的硬性保障协议：<strong>保证流媒体全解锁</strong>。您可以完美流畅地访问包括 Netflix（网飞）、Disney+、Hulu 等主流平台。对线路“纯净风控画像”有极端要求的客户请知悉风险；若主要诉求是解锁流媒体，则可放心使用。
-                </div>
+                <section>
+                    <h2>CREDITS / 鸣谢</h2>
+                    <div class="list-group">
+                        <a href="https://qm.qq.com/q/y0o6LuKsy4" target="_blank" class="list-item">
+                            <span>主核Kernyr</span><span style="opacity:0.3">↗</span>
+                        </a>
+                        <a href="https://qm.qq.com/q/PumXNYXM8a" target="_blank" class="list-item">
+                            <span>森</span><span style="opacity:0.3">↗</span>
+                        </a>
+                        <a href="https://www.bt.cn" target="_blank" class="list-item">
+                            <span>宝塔面板 (bt.cn)</span><span style="opacity:0.3">↗</span>
+                        </a>
+                        <a href="https://www.google.com" target="_blank" class="list-item">
+                            <span>Google</span><span style="opacity:0.3">↗</span>
+                        </a>
+                        <a href="https://www.oracle.com" target="_blank" class="list-item">
+                            <span>Oracle</span><span style="opacity:0.3">↗</span>
+                        </a>
+                    </div>
+                </section>
             </div>
+
+            <footer class="footer">
+                "Skills make the future." — Since 2024.08.20
+            </footer>
         </div>
     </div>
 
-    <div class="accordion-item">
-        <div class="accordion-header">
-            <span>2. 售后服务、技术支持与退款规范</span>
-            <span class="icon">＋</span>
-        </div>
-        <div class="accordion-content doc-2">
-            <div class="inner-text">
-                <div class="header">
-                    <h1>售后服务与技术支持规范</h1>
-                    <div class="subtitle">极速响应通道与退款保障政策</div>
+    <!-- 第二屏：原公告手风琴内容 -->
+    <div id="announcement-section">
+        <div class="main-container" id="mainContainer">
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>1. 家庭宽带(Residential)声明与风险告知</span>
+                    <span class="icon">＋</span>
                 </div>
-
-                <h2>优先唯一的紧急联系通道</h2>
-                <p><strong>网站后台工单停用通知：</strong> 本站自带的工单（Ticket）系统目前处于<strong>暂时搁置/不处理状态</strong>。请勿在后台提交工单。</p>
-                <p><strong>直连通道：</strong> 任何业务咨询、机器报障、架构疑问，<strong>请务必直接通过即时通讯工具（IM）联系我本人</strong>。</p>
-                <ul>
-                    <li><strong>QQ / 微信 / 手机 同号：</strong> <code>+44 7749646514</code></li>
-                </ul>
-
-                <h2>极速沟通准则（拒绝无效寒暄）</h2>
-                <p>为了提高解决效率，极度反感并拒绝回复诸如“在吗？”、“服务器挂了”等毫无信息量的碎片化消息。咨询或报障时请务必在第一条消息中包含以下<strong>[故障三要素]</strong>：</p>
-                <ol>
-                    <li><strong>出问题的具体资源：</strong> （例如：具体的 IP 地址或服务器所在机房）</li>
-                    <li><strong>进行了什么操作导致：</strong> （例如：刚修改了 SSH 端口 / 装了某个环境扩展）</li>
-                    <li><strong>具体的报错信息：</strong> （例如：明确的 Error Code 或终端截图）</li>
-                </ol>
-
-                <div class="prohibited-zone">
-                    <strong>💳 严密的退款保障与例外政策 (Product Support)：</strong>
-                    <ul>
-                        <li>✅ <strong>常规产品 24 小时无理由退款：</strong> 常规的云服务器自开通起 <strong>24 小时以内</strong>，如觉得网络表现不符合预期，可申请全额原路退款。</li>
-                        <li>🚫 <strong>特殊业务一经售出概不退款：</strong> 针对 <strong>CDN 流量分发类产品</strong> 以及 <strong>住宅 IP（Residential IP）业务</strong>，由于一经向上游开通成本即被扣除，<strong>没有任何试用期，一经开通/充值，概不接受任何退款申请</strong>。</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="accordion-item">
-        <div class="accordion-header">
-            <span>3. 香港服务器自动 DD 纯净重装指南</span>
-            <span class="icon">＋</span>
-        </div>
-        <div class="accordion-content doc-3">
-            <div class="inner-text">
-                <div class="header">
-                    <h1>系统 DD 纯净重装指南</h1>
-                    <div class="subtitle">适用于云白平台香港机房服务器</div>
-                </div>
-
-                <p><strong>避坑提示：</strong> 本站香港服务器自带的系统模板镜像目前存在一些已知的组件 Bug。为了保障您后续跑业务的绝对稳定，<strong>强烈建议您在控制台首次重装系统后，务必使用 SSH 连入服务器，自己通过一键脚本重新刷入纯净版系统</strong>。</p>
-
-                <h2>第一步：拉取网络重装核心脚本</h2>
-                <p>使用 SSH 工具连接服务器后，输入以下命令并回车拉取脚本：</p>
-                <div class="info-box">
-                    curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh<br>
-                    # 若 curl 报错，可使用备用命令：<br>
-                    # wget -O reinstall.sh https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
-                </div>
-
-                <h2>第二步：执行全自动化重装</h2>
-                <p>请根据您的需求，修改下方代码中的中文提示部分为您自己的参数并执行：</p>
-                <div class="info-box">
-                    bash reinstall.sh 你要装的系统名称 --password 你要设置的复杂密码 --ssh-port 自定义ssh端口
-                </div>
-                <p><strong>举例说明：</strong><br>
-                如果您想重装为 Debian 12，设置密码为 <code>Yunbai@2026!</code>，SSH 端口改为 <code>2222</code>，则命令为：<br>
-                <code>bash reinstall.sh debian-12 --password "Yunbai@2026!" --ssh-port 2222</code></p>
-                <p><em>🔗 支持的完整系统镜像名称列表，请前往官方开源地址查阅：<a href="https://github.com/bin456789/reinstall" target="_blank">点击此处访问</a></em></p>
-
-                <h2>第三步：重启并等待</h2>
-                <p>代码在终端跑完且无报错后，输入 <code>reboot</code> 重启服务器。系统会断开连接并在后台自动进行底层的格式化与重装。通常需等待 10~20 分钟左右，请使用新密码 and 新端口重新连接即可。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="accordion-item">
-        <div class="accordion-header">
-            <span>4. 本群专属高压群规与服务边界</span>
-            <span class="icon">＋</span>
-        </div>
-        <div class="accordion-content doc-4">
-            <div class="inner-text">
-                <div class="header">
-                    <h1>群规与技术服务边界</h1>
-                    <div class="subtitle">社群纪律维护与公益项目免打扰协议</div>
-                </div>
-
-                <h2>📢 广告准入双轨制限制</h2>
-                <p>本群并非无门槛的广告广场。如果您想发布各类推广/AFF/接单广告，<strong>必须满足以下两个条件之一</strong>：</p>
-                <ul>
-                    <li><strong>条件一：</strong> 您的 QQ 群等级达到 <strong>80 级及以上</strong>的活跃账号。</li>
-                    <li><strong>条件二：</strong> 若等级未达标，必须<strong>提前私聊群主并取得本人的明文同意</strong>。</li>
-                </ul>
-                <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不姑息。</span></p>
-
-                <h2>🛠️ 技术支持边界划分</h2>
-                <p>我个人的精力极其有限，在这里明确划定支持边界：<strong>本人仅对“云平台 yunbai.org 的商业服务器订单、账单、云资源硬件故障”提供一对一的技术支持。</strong></p>
-
-                <div class="warning-box">
-                    <span class="warning-title">⚠️ 公益项目免打扰协议：</span>
-                    旗下所有的“公益项目”，均是我个人利用闲置算力和时间用爱发电搭建的。对于这些公益项目，除遇到导致服务全盘瘫痪的<strong>严重系统 Bug</strong> 允许向我反馈外，其余任何关于“怎么配置”、“为什么连不上本地”、“能不能加功能”等琐碎技术盲区，<strong>请自行使用搜索引擎解决，非严重 Bug 严禁私聊打扰，违者拉黑</strong>。
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="accordion-item">
-        <div class="accordion-header">
-            <span>5. 云白生态架构与公益项目矩阵总览</span>
-            <span class="icon">＋</span>
-        </div>
-        <div class="accordion-content doc-5">
-            <div class="inner-text">
-                <div class="header">
-                    <h1>生态架构与项目矩阵</h1>
-                    <div class="subtitle">官方直属业务及公益项目域名汇总</div>
-                </div>
-
-                <p>请大家根据自身的需求，妥善保存并认准以下官方直属的核心商业业务及公益项目的域名地址，请勿访问假冒或劫持网站：</p>
-
-                <h2>📊 核心商用云服务架构</h2>
-                <ul>
-                    <li><strong>云白综合云平台（主站入口）：</strong> <a href="https://yunbai.org" target="_blank">yunbai.org</a></li>
-                    <li><strong>平台用户协议/公告原址：</strong> <a href="https://delightful-pond-062850400.7.azurestaticapps.net/" target="_blank">Azure 静态托管节点</a></li>
-                </ul>
-
-                <h2>🎁 旗下公益项目生态（用爱发电）</h2>
-                <p>请大家珍惜公共资源，合理规范调用，并严格遵守前述的“非 Bug 勿扰”原则：</p>
-                <ul>
-                    <li><strong>公益 QQ 等级代挂系统：</strong> <a href="http://yd.yunbai.icu" target="_blank">yd.yunbai.icu</a> <em>（一键全自动化托管挂级）</em></li>
-                    <li><strong>公益码支付接口平台：</strong> <a href="http://pay.yunbai.icu" target="_blank">pay.yunbai.icu</a> <em>（免费便利的免签聚合支付API）</em></li>
-                    <li><strong class="warning-red">公益 API 接口管理 V1版：</strong> <a href="http://api.yunbai.icu" target="_blank">api.yunbai.icu</a> <em>（⚠️ 老版本架构，目前已全面停止维护）</em></li>
-                    <li><strong>🚀 公益 API 接口管理 V2版：</strong> <a href="http://v2.api.yunbai.icu" target="_blank">v2.api.yunbai.icu</a> <em>（全新维护，涵盖大模型分发、随机 ACG 二次元图等高频接口）</em></li>
-                    <li><strong>公益高清无损免费图床：</strong> <a href="http://nsgr.cn" target="_blank">nsgr.cn</a> <em>（稳定、高速的无偿图片静态托管空间）</em></li>
-                </ul>
-
-                <div class="footer-note">
-                    规矩的建立是为了提供更稳定的服务，感谢大家的配合与支持！祝玩机愉快。
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="dynamicContainer"></div>
-
-    <div class="site-footer">
-        Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
-    </div>
-
-</div>
-
-<script>
-    // 绑定与重置手风琴折叠事件
-    function initAccordion() {
-        const items = document.querySelectorAll('.accordion-item');
-        items.forEach(item => {
-            const header = item.querySelector('.accordion-header');
-            header.removeEventListener('click', handleAccordionClick);
-            header.addEventListener('click', handleAccordionClick);
-        });
-    }
-
-    function handleAccordionClick(e) {
-        const item = e.currentTarget.parentElement;
-        const items = document.querySelectorAll('.accordion-item');
-        const isActive = item.classList.contains('active');
-        
-        items.forEach(otherItem => {
-            otherItem.classList.remove('active');
-            otherItem.querySelector('.icon').innerText = '＋';
-        });
-
-        if (!isActive) {
-            item.classList.add('active');
-            item.querySelector('.icon').innerText = '－';
-            setTimeout(() => {
-                item.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 400);
-        }
-    }
-
-    // 核心工具：防空壳/幽灵数据的万能清洗器
-    function getValidList(responseData, requiredField, statusField) {
-        if (!responseData) return [];
-        
-        let list = [];
-        // 兼容不同接口的返回结构（直接返回数组 vs 对象包裹）
-        if (Array.isArray(responseData)) {
-            list = responseData;
-        } else if (responseData.data !== undefined && Array.isArray(responseData.data)) {
-            list = responseData.data;
-        } else if (responseData[requiredField]) {
-            list = [responseData];
-        } else {
-            return []; // 处理 {code: 0, msg: "无数据"} 等情况
-        }
-
-        // 最核心的护盾过滤：
-        // 1. 过滤空对象/空壳数据 (必须含有我们指定的核心字段)
-        // 2. 状态值 status/state 不能异常 (等于1代表正常)
-        return list.filter(item => {
-            if (!item || !item[requiredField]) return false;
-            if (item[statusField] !== undefined && item[statusField] != 1) return false;
-            return true;
-        });
-    }
-
-    // 页面加载完成后并发发起云端API请求
-    document.addEventListener("DOMContentLoaded", function() {
-        initAccordion();
-
-        const noticeUrl = "https://auth.yunbai.icu/api/Index/notice?appid=4&webkey=23820DCC509A6F75849B";
-        const linkUrl = "https://auth.yunbai.icu/api/Index/linklist?webkey=23820DCC509A6F75849B";
-        const adUrl = "https://auth.yunbai.icu/api/Index/getAdList?type=1&appid=4&webkey=23820DCC509A6F75849B";
-        
-        Promise.all([
-            fetch(noticeUrl).then(res => res.json()).catch(() => null),
-            fetch(linkUrl).then(res => res.json()).catch(() => null),
-            fetch(adUrl).then(res => res.json()).catch(() => null)
-        ]).then(([noticeData, linkData, adData]) => {
-            
-            const container = document.getElementById('dynamicContainer');
-            let baseIndex = 6; // 固定选项1~5，自第6个选项卡开始渲染
-
-            // 经过万能过滤清洗，拿到的绝对是真实、有效的数据（空壳直接变为空数组）
-            const activeNotices = getValidList(noticeData, 'title', 'state');
-            const activeLinks = getValidList(linkData, 'name', 'state');
-            const activeAds = getValidList(adData, 'webname', 'status');
-
-            // ======= 1. 动态公告 模块 =======
-            activeNotices.forEach((notice) => {
-                const noticeHtml = `
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>${baseIndex}. ${notice.title}</span>
-                            <span class="icon">＋</span>
+                <div class="accordion-content doc-1">
+                    <div class="inner-text">
+                        <div class="header">
+                            <h1>家庭宽带 (Residential IP) 业务声明</h1>
+                            <div class="subtitle">深度声明与购买风险准则</div>
                         </div>
-                        <div class="accordion-content doc-remote">
-                            <div class="inner-text">
-                                <div class="header">
-                                    <h1>${notice.title}</h1>
-                                    <div class="subtitle">发布时间: ${notice.time || '未知'} | 管理员: ${notice.username || '系统'}</div>
-                                </div>
-                                <p>${notice.content.replace(/\n/g, '<br>')}</p>
-                            </div>
+                        <p>由于全球 IPv4 资源的枯竭以及上游数据中心（IDC）针对 IP 库属性的动态调整，目前市场上的“家宽”定义存在极大的灰色地带。为本着绝对坦诚、不套路的原则，作出如下强制性风险告知：</p>
+                        
+                        <h2>🇩🇪 德国 / 🇬🇧 英国 节点（伪家宽预警）</h2>
+                        <p><strong>资源本质：</strong> 目前本站交付的德/英两地“家宽”产品，从底层网络架构上来说，<strong>均为 GTT 线路的“伪家宽”</strong>（即通过特定路由或 IP 广播手段，使数据库将其标记为 Residential，但物理层级仍属于机房）。</p>
+                        <p><strong>适用边界：</strong> 仅适用于对 IP 纯净度要求一般的常规业务。如果您从事的是极度严苛的风控业务（如高难度问卷调查、对物理宽带要求极高的金融/电商平台），<strong>请务必谨慎考虑，我们强烈建议您不要盲目下单</strong>。</p>
+
+                        <h2>🇺🇸 美国 节点（盲盒属性说明）</h2>
+                        <p><strong>真实性免责：</strong> 美国 IP 库的变动极为频繁。对于美国家宽节点的 100% 绝对纯正性，<strong>本平台不做任何无死角的承诺，坦白讲我也无法给出绝对保证</strong>。</p>
+                        <p><strong>采购建议：</strong> 请务必利用您自己的专业测试手段进行先行甄别。请在确认能够承受 IP 属性随时波动的潜在风险后再行购买。</p>
+
+                        <div class="warning-box">
+                            <span class="warning-title">唯一硬性的服务保障：流媒体解锁</span>
+                            虽然无法保证所有 IP 的绝对原生性，但我方提供唯一的硬性保障协议：<strong>保证流媒体全解锁</strong>。您可以完美流畅地访问包括 Netflix（网飞）、Disney+、Hulu 等主流平台。对线路“纯净风控画像”有极端要求的客户请知悉风险；若主要诉求是解锁流媒体，则可放心使用。
                         </div>
                     </div>
-                `;
-                container.insertAdjacentHTML('beforeend', noticeHtml);
-                baseIndex++; 
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>2. 售后服务、技术支持与退款规范</span>
+                    <span class="icon">＋</span>
+                </div>
+                <div class="accordion-content doc-2">
+                    <div class="inner-text">
+                        <div class="header">
+                            <h1>售后服务与技术支持规范</h1>
+                            <div class="subtitle">极速响应通道与退款保障政策</div>
+                        </div>
+
+                        <h2>优先唯一的紧急联系通道</h2>
+                        <p><strong>网站后台工单停用通知：</strong> 本站自带的工单（Ticket）系统目前处于<strong>暂时搁置/不处理状态</strong>。请勿在后台提交工单。</p>
+                        <p><strong>直连通道：</strong> 任何业务咨询、机器报障、架构疑问，<strong>请务必直接通过即时通讯工具（IM）联系我本人</strong>。</p>
+                        <ul>
+                            <li><strong>QQ / 微信 / 手机 同号：</strong> <code>+44 7749646514</code></li>
+                        </ul>
+
+                        <h2>极速沟通准则（拒绝无效寒暄）</h2>
+                        <p>为了提高解决效率，极度反感并拒绝回复诸如“在吗？”、“服务器挂了”等毫无信息量的碎片化消息。咨询或报障时请务必在第一条消息中包含以下<strong>[故障三要素]</strong>：</p>
+                        <ol>
+                            <li><strong>出问题的具体资源：</strong> （例如：具体的 IP 地址或服务器所在机房）</li>
+                            <li><strong>进行了什么操作导致：</strong> （例如：刚修改了 SSH 端口 / 装了某个环境扩展）</li>
+                            <li><strong>具体的报错信息：</strong> （例如：明确的 Error Code 或终端截图）</li>
+                        </ol>
+
+                        <div class="prohibited-zone">
+                            <strong>💳 严密的退款保障与例外政策 (Product Support)：</strong>
+                            <ul>
+                                <li>✅ <strong>常规产品 24 小时无理由退款：</strong> 常规的云服务器自开通起 <strong>24 小时以内</strong>，如觉得网络表现不符合预期，可申请全额原路退款。</li>
+                                <li>🚫 <strong>特殊业务一经售出概不退款：</strong> 针对 <strong>CDN 流量分发类产品</strong> 以及 <strong>住宅 IP（Residential IP）业务</strong>，由于一经向上游开通成本即被扣除，<strong>没有任何试用期，一经开通/充值，概不接受任何退款申请</strong>。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>3. 香港服务器自动 DD 纯净重装指南</span>
+                    <span class="icon">＋</span>
+                </div>
+                <div class="accordion-content doc-3">
+                    <div class="inner-text">
+                        <div class="header">
+                            <h1>系统 DD 纯净重装指南</h1>
+                            <div class="subtitle">适用于云白平台香港机房服务器</div>
+                        </div>
+
+                        <p><strong>避坑提示：</strong> 本站香港服务器自带的系统模板镜像目前存在一些已知的组件 Bug。为了保障您后续跑业务的绝对稳定，<strong>强烈建议您在控制台首次重装系统后，务必使用 SSH 连入服务器，自己通过一键脚本重新刷入纯净版系统</strong>。</p>
+
+                        <h2>第一步：拉取网络重装核心脚本</h2>
+                        <p>使用 SSH 工具连接服务器后，输入以下命令并回车拉取脚本：</p>
+                        <div class="info-box">
+                            curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh<br>
+                            # 若 curl 报错，可使用备用命令：<br>
+                            # wget -O reinstall.sh https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
+                        </div>
+
+                        <h2>第二步：执行全自动化重装</h2>
+                        <p>请根据您的需求，修改下方代码中的中文提示部分为您自己的参数并执行：</p>
+                        <div class="info-box">
+                            bash reinstall.sh 你要装的系统名称 --password 你要设置的复杂密码 --ssh-port 自定义ssh端口
+                        </div>
+                        <p><strong>举例说明：</strong><br>
+                        如果您想重装为 Debian 12，设置密码为 <code>Yunbai@2026!</code>，SSH 端口改为 <code>2222</code>，则命令为：<br>
+                        <code>bash reinstall.sh debian-12 --password "Yunbai@2026!" --ssh-port 2222</code></p>
+                        <p><em>🔗 支持的完整系统镜像名称列表，请前往官方开源地址查阅：<a href="https://github.com/bin456789/reinstall" target="_blank">点击此处访问</a></em></p>
+
+                        <h2>第三步：重启并等待</h2>
+                        <p>代码在终端跑完且无报错后，输入 <code>reboot</code> 重启服务器。系统会断开连接并在后台自动进行底层的格式化与重装。通常需等待 10~20 分钟左右，请使用新密码 and 新端口重新连接即可。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>4. 本群专属高压群规与服务边界</span>
+                    <span class="icon">＋</span>
+                </div>
+                <div class="accordion-content doc-4">
+                    <div class="inner-text">
+                        <div class="header">
+                            <h1>群规与技术服务边界</h1>
+                            <div class="subtitle">社群纪律维护与公益项目免打扰协议</div>
+                        </div>
+
+                        <h2>📢 广告准入双轨制限制</h2>
+                        <p>本群并非无门槛的广告广场。如果您想发布各类推广/AFF/接单广告，<strong>必须满足以下两个条件之一</strong>：</p>
+                        <ul>
+                            <li><strong>条件一：</strong> 您的 QQ 群等级达到 <strong>80 级及以上</strong>的活跃账号。</li>
+                            <li><strong>条件二：</strong> 若等级未达标，必须<strong>提前私聊群主并取得本人的明文同意</strong>。</li>
+                        </ul>
+                        <p><span class="warning-red">严重警告：任何违规发布未经授权的广告或引流链接的行为，一律撤回消息并直接送飞机票（踢出并拉黑），绝不姑息。</span></p>
+
+                        <h2>🛠️ 技术支持边界划分</h2>
+                        <p>我个人的精力极其有限，在这里明确划定支持边界：<strong>本人仅对“云平台 yunbai.org 的商业服务器订单、账单、云资源硬件故障”提供一对一的技术支持。</strong></p>
+
+                        <div class="warning-box">
+                            <span class="warning-title">⚠️ 公益项目免打扰协议：</span>
+                            旗下所有的“公益项目”，均是我个人利用闲置算力和时间用爱发电搭建的。对于这些公益项目，除遇到导致服务全盘瘫痪的<strong>严重系统 Bug</strong> 允许向我反馈外，其余任何关于“怎么配置”、“为什么连不上本地”、“能不能加功能”等琐碎技术盲区，<strong>请自行使用搜索引擎解决，非严重 Bug 严禁私聊打扰，违者拉黑</strong>。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>5. 云白生态架构与公益项目矩阵总览</span>
+                    <span class="icon">＋</span>
+                </div>
+                <div class="accordion-content doc-5">
+                    <div class="inner-text">
+                        <div class="header">
+                            <h1>生态架构与项目矩阵</h1>
+                            <div class="subtitle">官方直属业务及公益项目域名汇总</div>
+                        </div>
+
+                        <p>请大家根据自身的需求，妥善保存并认准以下官方直属的核心商业业务及公益项目的域名地址，请勿访问假冒或劫持网站：</p>
+
+                        <h2>📊 核心商用云服务架构</h2>
+                        <ul>
+                            <li><strong>云白综合云平台（主站入口）：</strong> <a href="https://yunbai.org" target="_blank">yunbai.org</a></li>
+                            <li><strong>平台用户协议/公告原址：</strong> <a href="https://delightful-pond-062850400.7.azurestaticapps.net/" target="_blank">Azure 静态托管节点</a></li>
+                        </ul>
+
+                        <h2>🎁 旗下公益项目生态（用爱发电）</h2>
+                        <p>请大家珍惜公共资源，合理规范调用，并严格遵守前述的“非 Bug 勿扰”原则：</p>
+                        <ul>
+                            <li><strong>公益 QQ 等级代挂系统：</strong> <a href="http://yd.yunbai.icu" target="_blank">yd.yunbai.icu</a> <em>（一键全自动化托管挂级）</em></li>
+                            <li><strong>公益码支付接口平台：</strong> <a href="http://pay.yunbai.icu" target="_blank">pay.yunbai.icu</a> <em>（免费便利的免签聚合支付API）</em></li>
+                            <li><strong class="warning-red">公益 API 接口管理 V1版：</strong> <a href="http://api.yunbai.icu" target="_blank">api.yunbai.icu</a> <em>（⚠️ 老版本架构，目前已全面停止维护）</em></li>
+                            <li><strong>🚀 公益 API 接口管理 V2版：</strong> <a href="http://v2.api.yunbai.icu" target="_blank">v2.api.yunbai.icu</a> <em>（全新维护，涵盖大模型分发、随机 ACG 二次元图等高频接口）</em></li>
+                            <li><strong>公益高清无损免费图床：</strong> <a href="http://nsgr.cn" target="_blank">nsgr.cn</a> <em>（稳定、高速的无偿图片静态托管空间）</em></li>
+                        </ul>
+
+                        <div class="footer-note">
+                            规矩的建立是为了提供更稳定的服务，感谢大家的配合与支持！祝玩机愉快。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动态注入节点位置 -->
+            <div id="dynamicContainer"></div>
+
+            <div class="site-footer">
+                Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 外部公共美化特效组件脚本 -->
+    <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/aixin.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/yinghua.js"></script>
+    <span class="js-cursor-container"></span>
+    <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/xiaoxingxing.js"></script>
+
+    <!-- 逻辑控制业务脚本 -->
+    <script>
+        // 绑定与重置手风琴折叠事件
+        function initAccordion() {
+            const items = document.querySelectorAll('.accordion-item');
+            items.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.removeEventListener('click', handleAccordionClick);
+                header.addEventListener('click', handleAccordionClick);
+            });
+        }
+
+        function handleAccordionClick(e) {
+            const item = e.currentTarget.parentElement;
+            const items = document.querySelectorAll('.accordion-item');
+            const isActive = item.classList.contains('active');
+            
+            items.forEach(otherItem => {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.icon').innerText = '＋';
             });
 
-            // ======= 2. 友情链接 模块 =======
-            if (activeLinks.length > 0) {
-                let linksHtml = '<ul class="link-list">';
-                activeLinks.forEach(link => {
-                    linksHtml += `
-                        <li>
-                            🔗 <a href="${link.url}" target="_blank">${link.name}</a>
-                            <span class="link-time">添加时间: ${link.time || '未知'}</span>
-                        </li>
-                    `;
-                });
-                linksHtml += '</ul>';
+            if (!isActive) {
+                item.classList.add('active');
+                item.querySelector('.icon').innerText = '－';
+                setTimeout(() => {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 400);
+            }
+        }
 
-                const linkSectionHtml = `
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>${baseIndex}. 友情链接与合作伙伴</span>
-                            <span class="icon">＋</span>
-                        </div>
-                        <div class="accordion-content doc-link">
-                            <div class="inner-text">
-                                <div class="header">
-                                    <h1>🤝 友情链接</h1>
-                                    <div class="subtitle">优质资源互换与长期战略合作伙伴</div>
-                                </div>
-                                <div class="prohibited-zone" style="background-color: #f8f9fa; border-color: #e9ecef;">
-                                    ${linksHtml}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.insertAdjacentHTML('beforeend', linkSectionHtml);
-                baseIndex++;
+        // 万能远程数据清洗器
+        function getValidList(responseData, requiredField, statusField) {
+            if (!responseData) return [];
+            
+            let list = [];
+            if (Array.isArray(responseData)) {
+                list = responseData;
+            } else if (responseData.data !== undefined && Array.isArray(responseData.data)) {
+                list = responseData.data;
+            } else if (responseData[requiredField]) {
+                list = [responseData];
+            } else {
+                return [];
             }
 
-            // ======= 3. 独家赞助广告 模块 =======
-            if (activeAds.length > 0) {
-                let adsHtml = '<div class="ad-list">';
-                
-                activeAds.forEach(ad => {
-                    // 逻辑：优先获取跳转地址 jump_url，若为空则拿 url 兜底
-                    const finalJumpUrl = ad.jump_url || ad.url || '#';
-                    
-                    // 识别创建者：有 username 字段则显示，无则看 user_id
-                    let creator = ad.username || (ad.user_id == "0" ? '后台管理员' : `用户ID:${ad.user_id || '未知'}`);
+            return list.filter(item => {
+                if (!item || !item[requiredField]) return false;
+                if (item[statusField] !== undefined && item[statusField] != 1) return false;
+                return true;
+            });
+        }
 
-                    adsHtml += `
-                        <div class="ad-item">
-                            <div class="ad-title-row">
-                                <span>🔗 ${ad.webname}</span>
-                                <div class="ad-meta">
-                                    <span>发布者: ${creator}</span> | 
-                                    <span>时间: ${ad.date || '未知'}</span>
-                                </div>
-                            </div>
-                            ${ad.introduction ? `<p class="ad-intro">${ad.introduction}</p>` : ''}
-                            
-                            <a href="${finalJumpUrl}" target="_blank" class="ad-jump-btn">
-                                点我跳转 ➔
-                            </a>
-                        </div>
-                    `;
-                });
-                adsHtml += '</div>';
-
-                const adSectionHtml = `
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>${baseIndex}. 独家赞助与推荐项目</span>
-                            <span class="icon">＋</span>
-                        </div>
-                        <div class="accordion-content doc-ad">
-                            <div class="inner-text">
-                                <div class="header">
-                                    <h1>🎈 赞助商与优秀项目推荐</h1>
-                                    <div class="subtitle">商业广告合作及精选优质站长业务</div>
-                                </div>
-                                <div class="prohibited-zone" style="background-color: #fdfaf2; border-color: #f5e7c4;">
-                                    ${adsHtml}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.insertAdjacentHTML('beforeend', adSectionHtml);
-            }
-
-            // 完成动态组件结构注入后，统一重置手风琴，维持动效
+        // 页面并发异步载入云端API数据
+        document.addEventListener("DOMContentLoaded", function() {
             initAccordion();
-        });
-    });
-</script>
 
+            const noticeUrl = "https://auth.yunbai.icu/api/Index/notice?appid=4&webkey=23820DCC509A6F75849B";
+            const linkUrl = "https://auth.yunbai.icu/api/Index/linklist?webkey=23820DCC509A6F75849B";
+            const adUrl = "https://auth.yunbai.icu/api/Index/getAdList?type=1&appid=4&webkey=23820DCC509A6F75849B";
+            
+            Promise.all([
+                fetch(noticeUrl).then(res => res.json()).catch(() => null),
+                fetch(linkUrl).then(res => res.json()).catch(() => null),
+                fetch(adUrl).then(res => res.json()).catch(() => null)
+            ]).then(([noticeData, linkData, adData]) => {
+                
+                const container = document.getElementById('dynamicContainer');
+                let baseIndex = 6; 
+
+                const activeNotices = getValidList(noticeData, 'title', 'state');
+                const activeLinks = getValidList(linkData, 'name', 'state');
+                const activeAds = getValidList(adData, 'webname', 'status');
+
+                // ======= 1. 动态远程公告 模块 =======
+                activeNotices.forEach((notice) => {
+                    const noticeHtml = `
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>${baseIndex}. ${notice.title}</span>
+                                <span class="icon">＋</span>
+                            </div>
+                            <div class="accordion-content doc-remote">
+                                <div class="inner-text">
+                                    <div class="header">
+                                        <h1>${notice.title}</h1>
+                                        <div class="subtitle">发布时间: ${notice.time || '未知'} | 管理员: ${notice.username || '系统'}</div>
+                                    </div>
+                                    <p>${notice.content.replace(/\n/g, '<br>')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', noticeHtml);
+                    baseIndex++; 
+                });
+
+                // ======= 2. 友情链接 模块 =======
+                if (activeLinks.length > 0) {
+                    let linksHtml = '<ul class="link-list">';
+                    activeLinks.forEach(link => {
+                        linksHtml += `
+                            <li>
+                                🔗 <a href="${link.url}" target="_blank">${link.name}</a>
+                                <span class="link-time">添加时间: ${link.time || '未知'}</span>
+                            </li>
+                        `;
+                    });
+                    linksHtml += '</ul>';
+
+                    const linkSectionHtml = `
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>${baseIndex}. 友情链接与合作伙伴</span>
+                                <span class="icon">＋</span>
+                            </div>
+                            <div class="accordion-content doc-link">
+                                <div class="inner-text">
+                                    <div class="header">
+                                        <h1>🤝 友情链接</h1>
+                                        <div class="subtitle">优质资源互换与长期战略合作伙伴</div>
+                                    </div>
+                                    <div class="prohibited-zone" style="background-color: #f8f9fa; border-color: #e9ecef;">
+                                        ${linksHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', linkSectionHtml);
+                    baseIndex++;
+                }
+
+                // ======= 3. 独家赞助广告 模块 =======
+                if (activeAds.length > 0) {
+                    let adsHtml = '<div class="ad-list">';
+                    
+                    activeAds.forEach(ad => {
+                        const finalJumpUrl = ad.jump_url || ad.url || '#';
+                        let creator = ad.username || (ad.user_id == "0" ? '后台管理员' : `用户ID:${ad.user_id || '未知'}`);
+
+                        adsHtml += `
+                            <div class="ad-item">
+                                <div class="ad-title-row">
+                                    <span>🔗 ${ad.webname}</span>
+                                    <div class="ad-meta">
+                                        <span>发布者: ${creator}</span> | 
+                                        <span>时间: ${ad.date || '未知'}</span>
+                                    </div>
+                                </div>
+                                ${ad.introduction ? `<p class="ad-intro">${ad.introduction}</p>` : ''}
+                                
+                                <a href="${finalJumpUrl}" target="_blank" class="ad-jump-btn">
+                                    点我跳转 ➔
+                                </a>
+                            </div>
+                        `;
+                    });
+                    adsHtml += '</div>';
+
+                    const adSectionHtml = `
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>${baseIndex}. 独家赞助与推荐项目</span>
+                                <span class="icon">＋</span>
+                            </div>
+                            <div class="accordion-content doc-ad">
+                                <div class="inner-text">
+                                    <div class="header">
+                                        <h1>🎈 赞助商与优秀项目推荐</h1>
+                                        <div class="subtitle">商业广告合作及精选优质站长业务</div>
+                                    </div>
+                                    <div class="prohibited-zone" style="background-color: #fdfaf2; border-color: #f5e7c4;">
+                                        ${adsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', adSectionHtml);
+                }
+
+                // 数据重装完成后重新挂载手风琴引擎
+                initAccordion();
+            });
+        });
+    </script>
 </body>
 </html>
