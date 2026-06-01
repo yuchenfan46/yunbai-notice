@@ -6,7 +6,6 @@
     <title>云白服务平台 - 综合公告与用户协议</title>
     <style>
         :root {
-            /* 1. 感谢名单/记事卡片 专用变量 */
             --card-glass-bg: rgba(255, 255, 255, 0.07);
             --card-glass-border: rgba(255, 255, 255, 0.15);
             --card-text-main: #ffffff;
@@ -14,7 +13,6 @@
             --card-accent: #7dd3fc;
             --card-font-main: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 
-            /* 2. 公告与协议 专用变量 */
             --primary-blue: #3498db;
             --acc-glass-bg: rgba(255, 255, 255, 0.75); 
             --anim-speed: 2.0s; 
@@ -41,7 +39,6 @@
             background-size: cover;
         }
 
-        /* [修复核心] 1. 全局暗色暗化遮罩，让上下两屏的背景底色绝对一致 */
         body::after {
             content: "";
             position: fixed;
@@ -50,8 +47,7 @@
             z-index: 1;
             pointer-events: none;
         }
-
-        /* 全局噪点纹理增加高级感 */
+        
         body::before {
             content: "";
             position: fixed;
@@ -61,10 +57,7 @@
             z-index: 1;
             pointer-events: none;
         }
-
-        /* =========================================
-           第一屏：感谢名单/记事卡片 区块
-           ========================================= */
+        
         #welcome-section {
             position: relative;
             height: 100dvh; 
@@ -199,16 +192,12 @@
             font-style: italic;
         }
 
-
-        /* =========================================
-           第二屏：综合公告与用户协议 区块
-           ========================================= */
+        
         #announcement-section {
             position: relative;
             z-index: 2;
             width: 100%;
             padding-top: 2vh; 
-            /* [修复核心] 2. 改为完全透明，不加整体毛玻璃，消灭生硬的白色切线 */
             background: transparent; 
             backdrop-filter: none; 
             -webkit-backdrop-filter: none;
@@ -283,7 +272,6 @@
             padding: 40px 50px;
         }
 
-        /* 隔离协议文本排版，防止污染第一屏卡片 */
         .inner-text .header { text-align: center; margin-bottom: 30px; }
         .inner-text h1 { font-size: 20pt; margin: 0; font-weight: bold; color: #2c3e50; }
         .inner-text .subtitle { color: #7f8c8d; font-size: 10pt; margin-top: 8px; }
@@ -301,25 +289,21 @@
         .info-box { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; margin: 15px 0; border-radius: 4px; font-size: 10.5pt; font-family: monospace; word-break: break-all; color: #333;}
         .footer-note { margin-top: 50px; font-size: 9pt; color: #bdc3c7; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
 
-        /* 分类主题色扩展配置 */
         .doc-1 h2 { color: #2980b9; border-left-color: #2980b9; background-color: #eff7fd; }
         .doc-2 h1 { color: #1a237e; } .doc-2 h2 { color: #1a237e; border-left-color: #1a237e; background: #f0f2f5; }
         .doc-3 h1 { color: #16a085; } .doc-3 h2 { color: #2c3e50; border-left-color: #16a085; background: #f0fdfa; }
         .doc-4 h1 { color: #8e44ad; } .doc-4 h2 { color: #8e44ad; border-left-color: #8e44ad; background: #f4ecf7; }
         .doc-5 h1 { color: #d35400; } .doc-5 h2 { color: #d35400; border-left-color: #d35400; background: #fdf2e9; }
         
-        /* 远程动态公告样式 */
         .doc-remote h1 { color: #e67e22; }
         .doc-remote h2 { color: #e67e22; border-left-color: #e67e22; background: #fdf6f0; }
 
-        /* 友情链接样式 */
         .doc-link h1 { color: #27ae60; }
         .doc-link .link-list { list-style: none; padding: 0; margin: 0; }
         .doc-link .link-list li { margin-bottom: 12px; font-size: 11pt; border-bottom: 1px dashed #eee; padding-bottom: 8px; }
         .doc-link .link-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .doc-link .link-time { font-size: 9pt; color: #95a5a6; float: right; }
 
-        /* 独家赞助广告样式 */
         .doc-ad h1 { color: #e74c3c; }
         .ad-list { display: flex; flex-direction: column; gap: 20px; }
         .ad-item { border-bottom: 1px dashed #e0e0e0; padding-bottom: 16px; position: relative; }
@@ -359,10 +343,7 @@
             font-size: 10pt;
             letter-spacing: 1.5px;
         }
-
-        /* =========================================
-           网页特效层级锁定修复
-           ========================================= */
+        
         #yinghua {
             position: fixed !important;
             top: 0 !important;
@@ -563,7 +544,7 @@
 
             <div class="accordion-item">
                 <div class="accordion-header">
-                    <span>4. 本群专属高压群规与服务边界</span>
+                    <span>4. 本群专属群规与服务边界</span>
                     <span class="icon">＋</span>
                 </div>
                 <div class="accordion-content doc-4">
@@ -573,7 +554,7 @@
                             <div class="subtitle">社群纪律维护与公益项目免打扰协议</div>
                         </div>
 
-                        <h2>📢 广告准入双轨制限制</h2>
+                        <h2>📢 广告限制</h2>
                         <p>本群并非无门槛的广告广场。如果您想发布各类推广/AFF/接单广告，<strong>必须满足以下两个条件之一</strong>：</p>
                         <ul>
                             <li><strong>条件一：</strong> 您的 QQ 群等级达到 <strong>80 级及以上</strong>的活跃账号。</li>
@@ -594,13 +575,13 @@
 
             <div class="accordion-item">
                 <div class="accordion-header">
-                    <span>5. 云白生态架构与公益项目矩阵总览</span>
+                    <span>5. 公益项目矩阵总览</span>
                     <span class="icon">＋</span>
                 </div>
                 <div class="accordion-content doc-5">
                     <div class="inner-text">
                         <div class="header">
-                            <h1>生态架构与项目矩阵</h1>
+                            <h1>我们提供以下服务</h1>
                             <div class="subtitle">官方直属业务及公益项目域名汇总</div>
                         </div>
 
@@ -696,7 +677,6 @@
             }
         }
 
-        // 万能远程数据清洗器
         function getValidList(responseData, requiredField, statusField) {
             if (!responseData) return [];
             
@@ -717,8 +697,6 @@
                 return true;
             });
         }
-
-        // 页面并发异步载入云端API数据
         document.addEventListener("DOMContentLoaded", function() {
             initAccordion();
 
@@ -739,7 +717,6 @@
                 const activeLinks = getValidList(linkData, 'name', 'state');
                 const activeAds = getValidList(adData, 'webname', 'status');
 
-                // ======= 1. 动态远程公告 模块 =======
                 activeNotices.forEach((notice) => {
                     const noticeHtml = `
                         <div class="accordion-item">
@@ -762,7 +739,6 @@
                     baseIndex++; 
                 });
 
-                // ======= 2. 友情链接 模块 =======
                 if (activeLinks.length > 0) {
                     let linksHtml = '<ul class="link-list">';
                     activeLinks.forEach(link => {
@@ -798,7 +774,6 @@
                     baseIndex++;
                 }
 
-                // ======= 3. 独家赞助广告 模块 =======
                 if (activeAds.length > 0) {
                     let adsHtml = '<div class="ad-list">';
                     
@@ -847,7 +822,6 @@
                     container.insertAdjacentHTML('beforeend', adSectionHtml);
                 }
 
-                // 数据重装完成后重新挂载手风琴引擎
                 initAccordion();
             });
         });
