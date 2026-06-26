@@ -1,5 +1,5 @@
 /**
- * online-announce.js
+ * online-announce.js (防乱码万能兼容版)
  * 从云端 API 拉取公告、友情链接、广告数据，渲染到 #onlineContainer
  */
 (function () {
@@ -19,21 +19,15 @@
 
     function getValidList(data, requiredField, statusField) {
         if (!data) return [];
-
-        // 【判断拦截】如果接口返回了 code，且不等于 1（比如查询失败），直接返回空数组
         if (data.code !== undefined && String(data.code) !== "1") {
             return [];
         }
-
-        // 【兼容老旧格式】判断数据在哪一层：老接口是数组，新接口在 data.data 里
         let list = Array.isArray(data) ? data
             : Array.isArray(data.data) ? data.data
             : data[requiredField] ? [data] : [];
             
-        // 【过滤状态】校验广告 status（只留等于 1 正常的）和公告 state
         return list.filter(item => {
             if (!item || !item[requiredField]) return false;
-            // 因为是用 != 1 弱等于，所以无论是返回数字 1 还是字符串 "1" 都能正确匹配
             if (item[statusField] !== undefined && item[statusField] != 1) return false;
             return true;
         });
@@ -44,7 +38,7 @@
             <div class="online-accordion-item">
                 <div class="online-accordion-header">
                     <div class="title-wrap">
-                        <span class="online-tag notice" style="display:inline-flex;align-items:center;gap:4px">${SVG_BELL}公告</span>
+                        <span class="online-tag notice" style="display:inline-flex;align-items:center;gap:4px">${SVG_BELL}\u516c\u544a</span>
                         <span>${notice.title}</span>
                     </div>
                     ${SVG_CHEVRON}
@@ -52,7 +46,7 @@
                 <div class="online-accordion-content">
                     <div class="online-inner">
                         <div class="online-inner-divider"></div>
-                        <div class="online-meta">📅 ${notice.time || '未知'} &nbsp;·&nbsp; 👤 ${notice.username || '系统'}</div>
+                        <div class="online-meta">📅 ${notice.time || '\u672a\u77e5'} &nbsp;·&nbsp; 👤 ${notice.username || '\u7cfb\u7edf'}</div>
                         <div class="online-content-text">${notice.content}</div>
                     </div>
                 </div>
@@ -77,8 +71,8 @@
             <div class="online-accordion-item">
                 <div class="online-accordion-header">
                     <div class="title-wrap">
-                        <span class="online-tag link" style="display:inline-flex;align-items:center;gap:4px">${SVG_LINK}链接</span>
-                        <span>友情链接与合作伙伴</span>
+                        <span class="online-tag link" style="display:inline-flex;align-items:center;gap:4px">${SVG_LINK}\u94fe\u63a5</span>
+                        <span>\u53cb\u60c5\u94fe\u63a5\u4e0e\u5408\u4f5c\u4f19\u4f34</span>
                     </div>
                     ${SVG_CHEVRON}
                 </div>
@@ -94,13 +88,13 @@
     function buildAdsHTML(ads) {
         let items = ads.map(ad => {
             const url = ad.jump_url || ad.url || '#';
-            const creator = ad.username || (ad.user_id == '0' ? '后台管理员' : `用户ID:${ad.user_id || '未知'}`);
+            const creator = ad.username || (ad.user_id == '0' ? '\u540e\u53f0\u7ba1\u7406\u5458' : `\u7528\u6237ID:${ad.user_id || '\u672a\u77e5'}`);
             return `
                 <div class="online-ad-item">
                     <div class="online-ad-title">🔗 ${ad.webname}</div>
-                    <div class="online-ad-meta">发布者: ${creator} &nbsp;·&nbsp; ${ad.date || '未知'}</div>
+                    <div class="online-ad-meta">\u53d1\u5e03\u8005: ${creator} &nbsp;·&nbsp; ${ad.date || '\u672a\u77e5'}</div>
                     ${ad.introduction ? `<div class="online-ad-intro">${ad.introduction}</div>` : ''}
-                    <a href="${url}" target="_blank" class="online-ad-btn">前往访问 ➔</a>
+                    <a href="${url}" target="_blank" class="online-ad-btn">\u524d\u5f80\u8bbf\u95ee \u2794</a>
                 </div>`;
         }).join('');
 
@@ -108,8 +102,8 @@
             <div class="online-accordion-item">
                 <div class="online-accordion-header">
                     <div class="title-wrap">
-                        <span class="online-tag ad" style="display:inline-flex;align-items:center;gap:4px">${SVG_STAR}推荐</span>
-                        <span>独家赞助与推荐项目</span>
+                        <span class="online-tag ad" style="display:inline-flex;align-items:center;gap:4px">${SVG_STAR}\u63a8\u8350</span>
+                        <span>\u72ec\u5bb6\u8d5e\u52a9\u4e0e\u63a8\u8350\u9879\u76ee</span>
                     </div>
                     ${SVG_CHEVRON}
                 </div>
@@ -148,16 +142,12 @@
         ]).then(([noticeData, linkData, adData]) => {
             if (loading) loading.remove();
 
-            // 这里分别传入了不同接口判断有效性的关键字段和状态字段
-            // 公告取 title 和 state
             const notices = getValidList(noticeData, 'title', 'state');
             const links   = getValidList(linkData,   'name',  'state');
-            // 广告取 webname 和 status
             const ads     = getValidList(adData,     'webname','status');
 
-            // 当三个接口都为空或者 code!=1 时，由于上面都会返回空数组，这里就会显示“暂无云端数据”
             if (!notices.length && !links.length && !ads.length) {
-                container.insertAdjacentHTML('beforeend', `<div class="online-empty">— 暂无云端数据 —</div>`);
+                container.insertAdjacentHTML('beforeend', `<div class="online-empty">\u2014 \u6682\u65e0\u4e91\u7aef\u6570\u636e \u2014</div>`);
                 return;
             }
 
