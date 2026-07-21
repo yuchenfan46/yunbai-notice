@@ -16,6 +16,7 @@
     const SVG_LINK_SM = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0;color:#2ecc71"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
     const SVG_ARROW   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>`;
     const SVG_STAR    = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0;color:#e74c3c"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+    const SVG_AD_TOGGLE = `<svg class="online-ad-link-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
 
     function getValidList(data, requiredField, statusField) {
         if (!data) return [];
@@ -100,7 +101,14 @@
                     <div class="online-ad-title">🔗 ${ad.webname}</div>
                     <div class="online-ad-meta">发布者: ${creator} &nbsp;·&nbsp; ${ad.date || '未知'}</div>
                     ${ad.introduction ? `<div class="online-ad-intro">${ad.introduction}</div>` : ''}
-                    <a href="${url}" target="_blank" class="online-ad-btn">前往访问 ➔</a>
+                    <div class="online-ad-link-divider">
+                        <div class="divider-line"></div>
+                        <div class="online-ad-link-toggle" role="button" aria-label="展开链接">${SVG_AD_TOGGLE}</div>
+                        <div class="divider-line"></div>
+                    </div>
+                    <div class="online-ad-link-reveal">
+                        <a href="${url}" target="_blank" class="online-ad-btn">前往访问 ➔</a>
+                    </div>
                 </div>`;
         }).join('');
 
@@ -136,6 +144,22 @@
         });
     }
 
+    // 广告/赞助项目：点击图标展开链接，再次点击收回链接（跳转逻辑不变，仅控制显隐）
+    function initAdLinkToggles(container) {
+        container.querySelectorAll('.online-ad-link-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const adItem = this.closest('.online-ad-item');
+                const reveal = adItem ? adItem.querySelector('.online-ad-link-reveal') : null;
+                if (!reveal) return;
+                const isExpanded = this.classList.contains('expanded');
+                this.classList.toggle('expanded', !isExpanded);
+                reveal.classList.toggle('expanded', !isExpanded);
+                this.setAttribute('aria-label', isExpanded ? '展开链接' : '收回链接');
+            });
+        });
+    }
+
     function render() {
         const container = document.getElementById('onlineContainer');
         const loading   = document.getElementById('onlineLoading');
@@ -161,11 +185,12 @@
                 return;
             }
 
-            notices.forEach(n => container.insertAdjacentHTML('beforeend', buildNoticeHTML(n)));
-            if (links.length) container.insertAdjacentHTML('beforeend', buildLinksHTML(links));
             if (ads.length)   container.insertAdjacentHTML('beforeend', buildAdsHTML(ads));
+            if (links.length) container.insertAdjacentHTML('beforeend', buildLinksHTML(links));
+            notices.forEach(n => container.insertAdjacentHTML('beforeend', buildNoticeHTML(n)));
 
             initOnlineAccordion(container);
+            initAdLinkToggles(container);
         });
     }
 

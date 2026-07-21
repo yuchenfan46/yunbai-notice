@@ -1,88 +1,72 @@
 /**
  * welcome.js
- * 渲染欢迎卡片内容区（记事 + 鸣谢）到 #welcome-content
+ * 渲染欢迎卡片内容区（平台欢迎 + 新年倒计时）到 #welcome-content
  */
 (function () {
+    // 计算距离 2027 年 1 月 1 日的时间
+    function calculateCountdown() {
+        const now = new Date();
+        const nextYear = new Date(2027, 0, 1);
+        const diff = nextYear - now;
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        return { days, hours, minutes, seconds };
+    }
+
+    const countdown = calculateCountdown();
+    
     var html = `
         <section>
-            <h2>JOURNEY / 记事</h2>
+            <h2>WELCOME / 欢迎来到云白</h2>
             <div class="about-p">
-                <p>故事开始于 <span class="highlight">2024 年 8 月 20 日</span>。</p>
-                <p>那天刷到的第一个建站视频，像是一把钥匙，打开了代码世界的大门。在技校的学习时光里，我没有那种按部就班的束缚，反而有更多的时间去钻研那些真正让我着迷的技术。</p>
-                <p>从对着视频敲下第一行代码，到 <span class="highlight">2025 年 9 月</span> 亲手让云白（yunbai）云平台上线。我习惯在实操中寻找答案，在 Oracle 节点和 API 接口的博弈中，构筑出这片属于自己的天地。</p>
-                <p>技术对我而言，是技能，更是热爱。感谢这一路上给予我启发和支持的每一位，感谢所有陪伴云白成长的你们。</p>
-                <p style="text-align:center;opacity:0.8;font-size:0.85rem">—— 特别鸣谢下列名单，致敬所有人。</p>
+                <p>欢迎来到 <span class="highlight">云白（yunbai.icu）</span> 社区！这是一个汇聚技术热爱者、代码创意家和未来梦想家的地方。</p>
+                <p>在这里，我们相信每一个想法都值得被实现，每一个学习者都能找到属于自己的成长之路。无论你是初出茅庐的编程新手，还是久经沙场的技术老手，云白都为你敞开怀抱。</p>
+                <p>我们用 <span class="highlight">代码</span> 书写梦想，用 <span class="highlight">社区</span> 温暖彼此。这不仅仅是一个平台，更是一个家——每个人都能在这里找到归属感，实现自己的技术价值。</p>
+                <p>感谢你的到来。让我们一起，在代码的世界里闪闪发光。🚀</p>
             </div>
         </section>
         <section>
-            <h2>CREDITS / 鸣谢</h2>
-            <div class="project-link-grid" style="margin-top:15px">
-                <a href="https://qm.qq.com/q/y0o6LuKsy4" target="_blank" class="project-link-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15)">
-                    <div class="project-link-icon" style="color:#7dd3fc;background:rgba(125,211,252,0.1)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    </div>
-                    <div class="project-link-body">
-                        <div class="project-link-title" style="color:#fff">主核Kernyr</div>
-                        <div class="project-link-desc" style="color:rgba(255,255,255,0.5)">核心支持与贡献</div>
-                    </div>
-                    <div class="project-link-arrow" style="background:rgba(255,255,255,0.1);color:#fff">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                </a>
-                <a href="https://qm.qq.com/q/pvl8rabaOk" target="_blank" class="project-link-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15)">
-                    <div class="project-link-icon" style="color:#2ecc71;background:rgba(46,204,113,0.1)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    </div>
-                    <div class="project-link-body">
-                        <div class="project-link-title" style="color:#fff">森</div>
-                        <div class="project-link-desc" style="color:rgba(255,255,255,0.5)">特别鸣谢</div>
-                    </div>
-                    <div class="project-link-arrow" style="background:rgba(255,255,255,0.1);color:#fff">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                </a>
-                <a href="https://www.bt.cn" target="_blank" class="project-link-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15)">
-                    <div class="project-link-icon" style="color:#27ae60;background:rgba(39,174,96,0.1)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                    </div>
-                    <div class="project-link-body">
-                        <div class="project-link-title" style="color:#fff">宝塔面板 (bt.cn)</div>
-                        <div class="project-link-desc" style="color:rgba(255,255,255,0.5)">服务器运维基石</div>
-                    </div>
-                    <div class="project-link-arrow" style="background:rgba(255,255,255,0.1);color:#fff">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                </a>
-                <a href="https://www.google.com" target="_blank" class="project-link-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15)">
-                    <div class="project-link-icon" style="color:#e74c3c;background:rgba(231,76,60,0.1)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    </div>
-                    <div class="project-link-body">
-                        <div class="project-link-title" style="color:#fff">Google</div>
-                        <div class="project-link-desc" style="color:rgba(255,255,255,0.5)">知识与灵感源泉</div>
-                    </div>
-                    <div class="project-link-arrow" style="background:rgba(255,255,255,0.1);color:#fff">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                </a>
-                <a href="https://www.oracle.com" target="_blank" class="project-link-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15)">
-                    <div class="project-link-icon" style="color:#c0392b;background:rgba(192,57,43,0.1)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                    </div>
-                    <div class="project-link-body">
-                        <div class="project-link-title" style="color:#fff">Oracle</div>
-                        <div class="project-link-desc" style="color:rgba(255,255,255,0.5)">云计算资源依托</div>
-                    </div>
-                    <div class="project-link-arrow" style="background:rgba(255,255,255,0.1);color:#fff">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                </a>
+            <h2>COUNTDOWN / 新年倒计时</h2>
+            <div class="countdown-wrapper" style="margin-top:20px">
+                <div class="countdown-item">
+                    <div class="countdown-value">${String(countdown.days).padStart(3, '0')}</div>
+                    <div class="countdown-label">天</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value">${String(countdown.hours).padStart(2, '0')}</div>
+                    <div class="countdown-label">小时</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value">${String(countdown.minutes).padStart(2, '0')}</div>
+                    <div class="countdown-label">分钟</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value">${String(countdown.seconds).padStart(2, '0')}</div>
+                    <div class="countdown-label">秒</div>
+                </div>
             </div>
+            <p style="text-align:center;margin-top:20px;color:rgba(255,255,255,0.6);font-size:0.9rem">距离 <span class="highlight">2027 年新年</span> 还有</p>
         </section>
     `;
 
     document.addEventListener('DOMContentLoaded', function () {
         var el = document.getElementById('welcome-content');
         if (el) el.innerHTML = html;
+        
+        // 每秒更新倒计时
+        setInterval(function() {
+            const countdown = calculateCountdown();
+            var countdownItems = document.querySelectorAll('.countdown-value');
+            if (countdownItems.length === 4) {
+                countdownItems[0].textContent = String(countdown.days).padStart(3, '0');
+                countdownItems[1].textContent = String(countdown.hours).padStart(2, '0');
+                countdownItems[2].textContent = String(countdown.minutes).padStart(2, '0');
+                countdownItems[3].textContent = String(countdown.seconds).padStart(2, '0');
+            }
+        }, 1000);
     });
 })();

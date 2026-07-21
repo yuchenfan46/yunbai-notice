@@ -17,7 +17,7 @@
             </header>
             <!-- welcome.js 渲染目标 -->
             <div class="scroll-content" id="welcome-content"></div>
-            <footer class="footer">"Skills make the future." — Since 2024.08.20</footer>
+            <footer class="footer">yunbai</footer>
         </div>
     </div>
 
@@ -65,8 +65,49 @@
         </div>
     </div>
 
+    <!-- ===== 关于我们 ===== -->
+    <div id="about-section">
+        <div class="online-section-header">
+            <div class="divider-line"></div>
+            <div class="dot"></div>
+            <div class="label">关于我们</div>
+            <div class="dot"></div>
+            <div class="divider-line"></div>
+        </div>
+        <div class="glass-container">
+            <header class="header">
+                <h1>YUNBAI</h1>
+                <div class="tagline">From Interest to Practice</div>
+            </header>
+            <!-- about-us.js 渲染目标 -->
+            <div class="scroll-content" id="about-content"></div>
+            <footer class="footer">"Skills make the future." — Since 2024.08.20</footer>
+        </div>
+    </div>
+
+    <!-- ===== 计时器 ===== -->
+    <div id="timer-section">
+        <div class="online-section-header">
+            <div class="divider-line"></div>
+            <div class="dot"></div>
+            <div class="label">计时器</div>
+            <div class="dot"></div>
+            <div class="divider-line"></div>
+        </div>
+        <div class="timer-container" id="timerContainer">
+            <!-- timer-pit-days.js 渲染目标 -->
+            <div class="timer-card" id="pitDaysTimer"></div>
+            <!-- timer-security-incident.js 渲染目标 -->
+            <div class="timer-card" id="securityIncidentTimer"></div>
+            <!-- timer-platform-online.js 渲染目标 -->
+            <div class="timer-card" id="platformOnlineTimer"></div>
+            <!-- timer-oracle-account.js 渲染目标 -->
+            <div class="timer-card" id="oracleAccountTimer"></div>
+        </div>
+    </div>
+
     <!-- ===== 页脚 ===== -->
-    <div id="announcement-section" style="padding-top:0">
+    <div id="footer-section" style="padding-top:0">
         <div class="main-container" style="padding-bottom:0">
             <div class="site-footer">
                 Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
@@ -82,11 +123,17 @@
 
     <!-- ===== 引用模块 ===== -->
     <script src="./js/welcome.js"></script>
+    <script src="./js/about-us.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/group-rules.js"></script>
     <script src="./js/platform-notices.js"></script>
     <script src="./js/online-announce.js"></script>
+    <script src="./js/accordion-cross-sync.js"></script>
     <script src="./js/customer-service.js"></script>
+    <script src="./js/timer/timer-pit-days.js"></script>
+    <script src="./js/timer/timer-security-incident.js"></script>
+    <script src="./js/timer/timer-platform-online.js"></script>
+    <script src="./js/timer/timer-oracle-account.js"></script>
 
 </body>
 </html>

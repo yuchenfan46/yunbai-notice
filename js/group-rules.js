@@ -142,7 +142,7 @@
         container.querySelectorAll('.accordion-item').forEach(item => {
             item.querySelector('.accordion-header').addEventListener('click', function () {
                 const isActive = item.classList.contains('active');
-                container.querySelectorAll('.accordion-item').forEach(i => {
+                document.querySelectorAll('.accordion-item').forEach(i => {
                     i.classList.remove('active');
                     i.querySelector('.icon').innerText = '＋';
                 });
