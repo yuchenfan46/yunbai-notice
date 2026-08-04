@@ -9,7 +9,7 @@
 
   const items = [
     {
-      title: '1. 免费主机服务说明与承诺边界',
+      title: '免费主机服务说明与承诺边界',
       colorClass: 'doc-4',
       content: `
 
