@@ -1,139 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>云白服务平台 - 综合公告与用户协议</title>
-    <link rel="stylesheet" href="./css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>云白服务平台 - 综合公告与用户协议</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
-    <!-- ===== 欢迎卡片 ===== -->
-    <div id="welcome-section">
-        <div class="glass-container">
-            <header class="header">
-                <h1>YUNBAI</h1>
-                <div class="tagline">From Interest to Practice</div>
-            </header>
-            <!-- welcome.js 渲染目标 -->
-            <div class="scroll-content" id="welcome-content"></div>
-            <footer class="footer">yunbai</footer>
-        </div>
+  <!-- ===== 欢迎卡片 ===== -->
+  <div id="welcome-section">
+    <div class="glass-container">
+      <header class="header">
+        <h1>YUNBAI</h1>
+        <div class="tagline">From Interest to Practice</div>
+      </header>
+      <!-- welcome.js 渲染目标 -->
+      <div class="scroll-content" id="welcome-content"></div>
+      <footer class="footer">yunbai</footer>
     </div>
+  </div>
 
-    <!-- ===== 群公告 ===== -->
-    <div id="announcement-section">
-        <div class="main-container">
-            <div class="online-section-header" style="margin-top:60px;margin-bottom:30px;width:100%">
-                <div class="divider-line"></div>
-                <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
-                <div class="label">群公告</div>
-                <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
-                <div class="divider-line"></div>
-            </div>
-            <!-- group-rules.js 渲染目标 -->
-            <div id="group-rules-container"></div>
+  <!-- ===== 群公告 ===== -->
+  <div id="announcement-section">
+    <div class="main-container">
+      <div class="online-section-header" style="margin-top:60px;margin-bottom:30px;width:100%">
+        <div class="divider-line"></div>
+        <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
+        <div class="label">群公告</div>
+        <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
+        <div class="divider-line"></div>
+      </div>
+      <!-- group-rules.js 渲染目标 -->
+      <div id="group-rules-container"></div>
 
-            <div class="online-section-header" style="margin-top:60px;margin-bottom:30px;width:100%">
-                <div class="divider-line"></div>
-                <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
-                <div class="label">云平台注意事项</div>
-                <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
-                <div class="divider-line"></div>
-            </div>
-            <!-- platform-notices.js 渲染目标 -->
-            <div id="platform-notices-container"></div>
-        </div>
+      <div class="online-section-header" style="margin-top:60px;margin-bottom:30px;width:100%">
+        <div class="divider-line"></div>
+        <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
+        <div class="label">云平台注意事项</div>
+        <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
+        <div class="divider-line"></div>
+      </div>
+      <!-- platform-notices.js 渲染目标 -->
+      <div id="platform-notices-container"></div>
+
+      <div class="online-section-header" style="margin-top:60px;margin-bottom:30px;width:100%">
+        <div class="divider-line"></div>
+        <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
+        <div class="label">免费主机规则</div>
+        <div class="dot" style="background:rgba(255,255,255,0.4)"></div>
+        <div class="divider-line"></div>
+      </div>
+      <!-- free-cloud-host-rules.js 渲染目标 -->
+      <div id="free-cloud-host-rules-container"></div>
     </div>
+  </div>
 
-    <!-- ===== 云端公告 ===== -->
-    <div id="online-section">
-        <div class="online-section-header">
-            <div class="divider-line"></div>
-            <div class="dot"></div>
-            <div class="label">云端公告</div>
-            <div class="dot"></div>
-            <div class="divider-line"></div>
-        </div>
-        <div class="online-container" id="onlineContainer">
-            <!-- online-announce.js 渲染目标，loading骨架 -->
-            <div class="online-loading" id="onlineLoading">
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card" style="opacity:0.7;height:56px"></div>
-                <div class="skeleton-card" style="opacity:0.5;height:56px"></div>
-            </div>
-        </div>
+  <!-- ===== 云端公告 ===== -->
+  <div id="online-section">
+    <div class="online-section-header">
+      <div class="divider-line"></div>
+      <div class="dot"></div>
+      <div class="label">云端公告</div>
+      <div class="dot"></div>
+      <div class="divider-line"></div>
     </div>
-
-    <!-- ===== 关于我们 ===== -->
-    <div id="about-section">
-        <div class="online-section-header">
-            <div class="divider-line"></div>
-            <div class="dot"></div>
-            <div class="label">关于我们</div>
-            <div class="dot"></div>
-            <div class="divider-line"></div>
-        </div>
-        <div class="glass-container">
-            <header class="header">
-                <h1>YUNBAI</h1>
-                <div class="tagline">From Interest to Practice</div>
-            </header>
-            <!-- about-us.js 渲染目标 -->
-            <div class="scroll-content" id="about-content"></div>
-            <footer class="footer">"Skills make the future." — Since 2024.08.20</footer>
-        </div>
+    <div class="online-container" id="onlineContainer">
+      <!-- online-announce.js 渲染目标，loading骨架 -->
+      <div class="online-loading" id="onlineLoading">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card" style="opacity:0.7;height:56px"></div>
+        <div class="skeleton-card" style="opacity:0.5;height:56px"></div>
+      </div>
     </div>
+  </div>
 
-    <!-- ===== 计时器 ===== -->
-    <div id="timer-section">
-        <div class="online-section-header">
-            <div class="divider-line"></div>
-            <div class="dot"></div>
-            <div class="label">计时器</div>
-            <div class="dot"></div>
-            <div class="divider-line"></div>
-        </div>
-        <div class="timer-container" id="timerContainer">
-            <!-- timer-pit-days.js 渲染目标 -->
-            <div class="timer-card" id="pitDaysTimer"></div>
-            <!-- timer-security-incident.js 渲染目标 -->
-            <div class="timer-card" id="securityIncidentTimer"></div>
-            <!-- timer-platform-online.js 渲染目标 -->
-            <div class="timer-card" id="platformOnlineTimer"></div>
-            <!-- timer-oracle-account.js 渲染目标 -->
-            <div class="timer-card" id="oracleAccountTimer"></div>
-        </div>
+  <!-- ===== 关于我们 ===== -->
+  <div id="about-section">
+    <div class="online-section-header">
+      <div class="divider-line"></div>
+      <div class="dot"></div>
+      <div class="label">关于我们</div>
+      <div class="dot"></div>
+      <div class="divider-line"></div>
     </div>
-
-    <!-- ===== 页脚 ===== -->
-    <div id="footer-section" style="padding-top:0">
-        <div class="main-container" style="padding-bottom:0">
-            <div class="site-footer">
-                Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
-            </div>
-        </div>
+    <div class="glass-container">
+      <header class="header">
+        <h1>YUNBAI</h1>
+        <div class="tagline">From Interest to Practice</div>
+      </header>
+      <!-- about-us.js 渲染目标 -->
+      <div class="scroll-content" id="about-content"></div>
+      <footer class="footer">"Skills make the future." — Since 2024.08.20</footer>
     </div>
+  </div>
 
-    <!-- ===== 特效 ===== -->
-    <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/aixin.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/yinghua.js"></script>
-    <span class="js-cursor-container"></span>
-    <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/xiaoxingxing.js"></script>
+  <!-- ===== 计时器 ===== -->
+  <div id="timer-section">
+    <div class="online-section-header">
+      <div class="divider-line"></div>
+      <div class="dot"></div>
+      <div class="label">计时器</div>
+      <div class="dot"></div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="timer-container" id="timerContainer">
+      <!-- timer-pit-days.js 渲染目标 -->
+      <div class="timer-card" id="pitDaysTimer"></div>
+      <!-- timer-security-incident.js 渲染目标 -->
+      <div class="timer-card" id="securityIncidentTimer"></div>
+      <!-- timer-platform-online.js 渲染目标 -->
+      <div class="timer-card" id="platformOnlineTimer"></div>
+      <!-- timer-oracle-account.js 渲染目标 -->
+      <div class="timer-card" id="oracleAccountTimer"></div>
+    </div>
+  </div>
 
-    <!-- ===== 引用模块 ===== -->
-    <script src="./js/welcome.js"></script>
-    <script src="./js/about-us.js"></script>
-    <script src="./js/utils.js"></script>
-    <script src="./js/group-rules.js"></script>
-    <script src="./js/platform-notices.js"></script>
-    <script src="./js/online-announce.js"></script>
-    <script src="./js/accordion-cross-sync.js"></script>
-    <script src="./js/customer-service.js"></script>
-    <script src="./js/timer/timer-pit-days.js"></script>
-    <script src="./js/timer/timer-security-incident.js"></script>
-    <script src="./js/timer/timer-platform-online.js"></script>
-    <script src="./js/timer/timer-oracle-account.js"></script>
+  <!-- ===== 页脚 ===== -->
+  <div id="footer-section" style="padding-top:0">
+    <div class="main-container" style="padding-bottom:0">
+      <div class="site-footer">
+        Copyright &copy; 2025-2026 <strong>yunbai.icu</strong> All Rights Reserved.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 特效 ===== -->
+  <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/aixin.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/yinghua.js"></script>
+  <span class="js-cursor-container"></span>
+  <script src="https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/xiaoxingxing.js"></script>
+
+  <!-- ===== 引用模块 ===== -->
+  <script src="./js/welcome.js"></script>
+  <script src="./js/about-us.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/group-rules.js"></script>
+  <script src="./js/platform-notices.js"></script>
+  <script src="./js/free-cloud-host-rules.js"></script>
+  <script src="./js/online-announce.js"></script>
+  <script src="./js/accordion-cross-sync.js"></script>
+  <script src="./js/customer-service.js"></script>
+  <script src="./js/timer/timer-pit-days.js"></script>
+  <script src="./js/timer/timer-security-incident.js"></script>
+  <script src="./js/timer/timer-platform-online.js"></script>
+  <script src="./js/timer/timer-oracle-account.js"></script>
 
 </body>
 </html>
