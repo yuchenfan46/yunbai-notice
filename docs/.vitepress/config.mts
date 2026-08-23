@@ -9,20 +9,16 @@ export default defineConfig({
     ['script', { src: 'https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/aixin.js' }],
     ['script', { src: 'https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/yinghua.js' }],
     ['script', { src: 'https://cdn.jsdelivr.net/gh/mocchen/cssmeihua/js/xiaoxingxing.js' }],
-    ['script', {
-      dangerouslySetInnerHTML: {
-        __html: `
-          window.GoCustomerServiceConfig = {
-            serverUrl: 'https://kf.yunbai.icu',
-            groupKey: 'yunbai'
-          };
-          var script = document.createElement('script');
-          script.src = 'https://kf.yunbai.icu/static/js/chat-widget.js';
-          script.async = true;
-          document.head.appendChild(script);
-        `
-      }
-    }]
+    ['script', {}, `
+      window.GoCustomerServiceConfig = {
+        serverUrl: 'https://kf.yunbai.icu',
+        groupKey: 'yunbai'
+      };
+      var script = document.createElement('script');
+      script.src = 'https://kf.yunbai.icu/static/js/chat-widget.js';
+      script.async = true;
+      document.head.appendChild(script);
+    `]
   ],
   themeConfig: {
     logo: { text: '🐾 YUNBAI' },
