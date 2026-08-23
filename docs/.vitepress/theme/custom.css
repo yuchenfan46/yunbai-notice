@@ -32,3 +32,33 @@ canvas[id*="snow"],
   pointer-events: none !important;
   z-index: 99999 !important;
 }
+
+
+/* 消除移动端与桌面端点击按钮/链接时的蓝色高亮与闪烁 */
+*,
+*::before,
+*::after,
+a,
+button,
+.VPButton,
+.VPLink,
+.action,
+.link,
+.card,
+.sponsor-btn,
+.online-accordion-header,
+.link-card {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+}
+
+:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+a:focus,
+button:focus,
+.VPButton:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
