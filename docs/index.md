@@ -29,7 +29,11 @@ features:
 
 <ProjectLinks />
 
-<OnlineSection />
+<OnlineNotice />
+
+<SponsorSection />
+
+<FriendLinks />
 
 ::: tip 欢迎来到云白社区
 云白（yunbai.icu）是一个汇聚技术热爱者、代码创意家和未来梦想家的地方。我们相信每一个想法都值得被实现，每一个学习者都能找到属于自己的成长之路。
