@@ -16,3 +16,19 @@
   color: #ef4444;
   font-weight: 600;
 }
+
+
+/* 樱花与页面背景特效层级及穿透优化 */
+#canvas_sakura,
+canvas#canvas_sakura,
+canvas[id*="sakura"],
+canvas[id*="snow"],
+.sakura-canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
+}
