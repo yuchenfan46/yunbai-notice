@@ -1,5 +1,5 @@
 <template>
-  <!-- 底部悬浮毛玻璃紧凑胶囊条 (不可隐藏/常驻) -->
+  <!-- 底部悬浮毛玻璃极简 IP 胶囊条 (常驻极简) -->
   <Transition name="fade-slide">
     <div
       v-if="show"
@@ -14,12 +14,8 @@
           <line x1="2" y1="12" x2="22" y2="12"></line>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
-        <span class="pill-label">Your IP:</span>
+        <span class="pill-label">IP:</span>
         <span class="pill-ip">{{ displayIp }}</span>
-        <span class="pill-divider">|</span>
-        <span class="pill-geo">{{ compactLocation }}</span>
-        <span class="pill-divider hide-mobile">|</span>
-        <span class="pill-org hide-mobile">{{ displayOrg }}</span>
       </div>
 
       <div class="pill-toggle">
@@ -30,7 +26,7 @@
     </div>
   </Transition>
 
-  <!-- 左下角/移动端弹出的毛玻璃详情卡片 (紧凑小巧版) -->
+  <!-- 点击后弹出的毛玻璃详细画像卡片 -->
   <Transition name="scale-fade">
     <div v-if="show && cardOpen" class="visitor-glass-card">
       <div class="card-header">
@@ -241,7 +237,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 悬浮药丸条 (更紧凑精致) */
+/* 悬浮超小极简胶囊条 (只显示 IP + 呼吸灯 + 展开指示) */
 .visitor-pill-bar {
   position: fixed;
   bottom: 12px;
@@ -250,45 +246,43 @@ onMounted(() => {
   z-index: 999;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 4px 12px;
+  gap: 6px;
+  padding: 3px 10px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
-  font-size: 0.76rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+  font-size: 0.74rem;
   color: var(--vp-c-text-1);
   cursor: pointer;
   user-select: none;
-  max-width: calc(100vw - 24px);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root.dark .visitor-pill-bar {
   background: rgba(18, 22, 34, 0.72);
   border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .visitor-pill-bar:hover {
   transform: translateX(-50%) translateY(-1px);
-  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.14);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.14);
   border-color: var(--vp-c-brand-1);
 }
 
 .pill-content {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .pulse-dot {
-  width: 6px;
-  height: 6px;
+  width: 5.5px;
+  height: 5.5px;
   border-radius: 50%;
   background: #10b981;
   box-shadow: 0 0 6px #10b981;
@@ -302,8 +296,8 @@ onMounted(() => {
 }
 
 .pill-icon {
-  width: 13px;
-  height: 13px;
+  width: 12px;
+  height: 12px;
   color: var(--vp-c-brand-1);
   flex-shrink: 0;
 }
@@ -311,7 +305,7 @@ onMounted(() => {
 .pill-label {
   font-weight: 500;
   color: var(--vp-c-text-2);
-  font-size: 0.73rem;
+  font-size: 0.72rem;
 }
 
 .pill-ip {
@@ -319,17 +313,6 @@ onMounted(() => {
   font-weight: 600;
   color: var(--vp-c-brand-1);
   letter-spacing: -0.01em;
-}
-
-.pill-divider {
-  color: var(--vp-c-divider);
-  font-size: 0.7rem;
-}
-
-.pill-geo, .pill-org {
-  color: var(--vp-c-text-2);
-  font-weight: 500;
-  font-size: 0.73rem;
 }
 
 .pill-toggle {
@@ -341,8 +324,8 @@ onMounted(() => {
 }
 
 .action-svg {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   transition: transform 0.25s ease;
 }
 
@@ -353,7 +336,7 @@ onMounted(() => {
 /* 玻璃态详情小卡片 */
 .visitor-glass-card {
   position: fixed;
-  bottom: 48px;
+  bottom: 46px;
   left: 16px;
   z-index: 1000;
   width: 270px;
@@ -523,13 +506,10 @@ onMounted(() => {
 }
 
 @media (max-width: 640px) {
-  .hide-mobile {
-    display: none;
-  }
   .visitor-glass-card {
     left: 50%;
     transform: translateX(-50%);
-    bottom: 44px;
+    bottom: 42px;
   }
   .scale-fade-enter-from, .scale-fade-leave-to {
     transform: translateX(-50%) scale(0.95) translateY(8px);
