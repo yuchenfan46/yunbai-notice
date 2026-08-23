@@ -4,6 +4,8 @@
 
 基于 **VitePress** 强力驱动。
 
+> **声明**：此项目依托在 Azure (Azure Static Web Apps) 运行，仅供参考使用。
+
 ## 本地开发
 
 ```bash
