@@ -46,7 +46,7 @@ import { ref, onMounted } from 'vue'
 
 const loading = ref(true)
 const notices = ref([])
-const activeKey = ref('notice-0') // 默认展开第一条公告
+const activeKey = ref('') // 默认展开第一条公告
 
 function toggle(key) {
   activeKey.value = activeKey.value === key ? '' : key
