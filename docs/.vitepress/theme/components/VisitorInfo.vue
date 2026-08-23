@@ -1,11 +1,11 @@
 <template>
-  <!-- 底部悬浮毛玻璃胶囊条 (全站浮动) -->
+  <!-- 底部悬浮毛玻璃紧凑胶囊条 (不可隐藏/常驻) -->
   <Transition name="fade-slide">
     <div
-      v-if="show && !dismissed"
+      v-if="show"
       class="visitor-pill-bar"
-      :class="{ 'minimized': isMinimized }"
-      @click="toggleExpand"
+      @click="toggleCard"
+      :title="cardOpen ? '点击收起画像' : '点击查看详细网络画像'"
     >
       <div class="pill-content">
         <span class="pulse-dot"></span>
@@ -22,25 +22,17 @@
         <span class="pill-org hide-mobile">{{ displayOrg }}</span>
       </div>
 
-      <div class="pill-actions" @click.stop>
-        <button class="pill-btn-icon" :title="isMinimized ? '展开详情' : '折叠'" @click="toggleCard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="action-svg">
-            <polyline :points="cardOpen ? '6 9 12 15 18 9' : '18 15 12 9 6 15'"></polyline>
-          </svg>
-        </button>
-        <button class="pill-btn-icon" title="关闭" @click="dismiss">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="action-svg">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+      <div class="pill-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="action-svg" :class="{ 'rotate-180': cardOpen }">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
       </div>
     </div>
   </Transition>
 
-  <!-- 左下角/移动端弹出的毛玻璃详情卡片 -->
+  <!-- 左下角/移动端弹出的毛玻璃详情卡片 (紧凑小巧版) -->
   <Transition name="scale-fade">
-    <div v-if="show && cardOpen && !dismissed" class="visitor-glass-card">
+    <div v-if="show && cardOpen" class="visitor-glass-card">
       <div class="card-header">
         <div class="card-user-info">
           <div class="avatar-gradient">
@@ -54,10 +46,9 @@
             <div class="user-sub">{{ welcomeText }}</div>
           </div>
         </div>
-        <button class="close-card-btn" @click="cardOpen = false">
+        <button class="close-card-btn" title="收起" @click="cardOpen = false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+            <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
         </button>
       </div>
@@ -68,7 +59,7 @@
         <div class="detail-row">
           <div class="detail-label">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            <span>公网 IP 地址</span>
+            <span>公网 IP</span>
           </div>
           <div class="detail-val font-mono ip-highlight">{{ displayIp }}</div>
         </div>
@@ -84,7 +75,7 @@
         <div class="detail-row">
           <div class="detail-label">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            <span>网络运营商</span>
+            <span>运营商</span>
           </div>
           <div class="detail-val truncate" :title="displayOrg">{{ displayOrg }}</div>
         </div>
@@ -100,7 +91,7 @@
         <div class="detail-row">
           <div class="detail-label">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line></svg>
-            <span>访问浏览器</span>
+            <span>浏览器</span>
           </div>
           <div class="detail-val">{{ browserName }}</div>
         </div>
@@ -118,9 +109,7 @@
 import { ref, computed, onMounted } from 'vue'
 
 const show = ref(false)
-const dismissed = ref(false)
 const cardOpen = ref(false)
-const isMinimized = ref(false)
 const visitorLoading = ref(true)
 
 const visitor = ref({
@@ -137,28 +126,18 @@ const currentDate = ref('')
 
 const displayIp = computed(() => visitor.value.ip || (visitorLoading.value ? '获取中...' : '未获取到'))
 const compactLocation = computed(() => {
-  if (visitorLoading.value) return '定位解析中...'
+  if (visitorLoading.value) return '定位中...'
   const parts = [visitor.value.country, visitor.value.region, visitor.value.city].filter(Boolean)
   return parts.join(' · ') || '未知位置'
 })
-const displayOrg = computed(() => visitor.value.org || (visitorLoading.value ? '网络检测中...' : '运营商未知'))
+const displayOrg = computed(() => visitor.value.org || (visitorLoading.value ? '检测中...' : '未知网络'))
 const welcomeText = computed(() => {
   if (visitorLoading.value) return '正在连接公网节点...'
-  return `来自 ${visitor.value.city || visitor.value.country || '远方'} 的朋友，欢迎访问！`
+  return `来自 ${visitor.value.city || visitor.value.country || '远方'} 的朋友，欢迎！`
 })
-
-function dismiss() {
-  dismissed.value = true
-}
 
 function toggleCard() {
   cardOpen.value = !cardOpen.value
-}
-
-function toggleExpand() {
-  if (!cardOpen.value) {
-    cardOpen.value = true
-  }
 }
 
 // 访客数据源
@@ -238,11 +217,11 @@ function detectClient() {
   else osName.value = 'Other OS'
 
   // Browser
-  if (/Edg/i.test(ua)) browserName.value = 'Microsoft Edge'
+  if (/Edg/i.test(ua)) browserName.value = 'Edge'
   else if (/Chrome/i.test(ua) && !/Chromium|Edg/i.test(ua)) browserName.value = 'Chrome'
   else if (/Firefox/i.test(ua)) browserName.value = 'Firefox'
   else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browserName.value = 'Safari'
-  else browserName.value = 'Web Browser'
+  else browserName.value = 'Browser'
 
   currentDate.value = new Date().toLocaleDateString('zh-CN', {
     month: 'short',
@@ -254,7 +233,7 @@ onMounted(() => {
   detectClient()
   setTimeout(() => {
     show.value = true
-  }, 500)
+  }, 400)
   fetchVisitor().finally(() => {
     visitorLoading.value = false
   })
@@ -262,57 +241,57 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 悬浮药丸条 */
+/* 悬浮药丸条 (更紧凑精致) */
 .visitor-pill-bar {
   position: fixed;
-  bottom: 20px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
+  gap: 7px;
+  padding: 4px 12px;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-  font-size: 0.85rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+  font-size: 0.76rem;
   color: var(--vp-c-text-1);
   cursor: pointer;
   user-select: none;
-  max-width: calc(100vw - 32px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: calc(100vw - 24px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root.dark .visitor-pill-bar {
-  background: rgba(18, 22, 34, 0.75);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+  background: rgba(18, 22, 34, 0.72);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .visitor-pill-bar:hover {
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.16);
+  transform: translateX(-50%) translateY(-1px);
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.14);
   border-color: var(--vp-c-brand-1);
 }
 
 .pill-content {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .pulse-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #10b981;
-  box-shadow: 0 0 8px #10b981;
+  box-shadow: 0 0 6px #10b981;
   animation: pulse-glow 2s infinite;
   flex-shrink: 0;
 }
@@ -323,8 +302,8 @@ onMounted(() => {
 }
 
 .pill-icon {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   color: var(--vp-c-brand-1);
   flex-shrink: 0;
 }
@@ -332,82 +311,66 @@ onMounted(() => {
 .pill-label {
   font-weight: 500;
   color: var(--vp-c-text-2);
+  font-size: 0.73rem;
 }
 
 .pill-ip {
   font-family: var(--vp-font-family-mono, monospace);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--vp-c-brand-1);
+  letter-spacing: -0.01em;
 }
 
 .pill-divider {
   color: var(--vp-c-divider);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .pill-geo, .pill-org {
   color: var(--vp-c-text-2);
   font-weight: 500;
+  font-size: 0.73rem;
 }
 
-.pill-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: 4px;
-  padding-left: 6px;
-  border-left: 1px solid var(--vp-c-divider);
-}
-
-.pill-btn-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
+.pill-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
   color: var(--vp-c-text-3);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.pill-btn-icon:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: var(--vp-c-text-1);
-}
-
-:root.dark .pill-btn-icon:hover {
-  background: rgba(255, 255, 255, 0.12);
+  margin-left: 2px;
 }
 
 .action-svg {
-  width: 13px;
-  height: 13px;
+  width: 12px;
+  height: 12px;
+  transition: transform 0.25s ease;
 }
 
-/* 玻璃态详情大卡片 */
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* 玻璃态详情小卡片 */
 .visitor-glass-card {
   position: fixed;
-  bottom: 74px;
-  left: 20px;
+  bottom: 48px;
+  left: 16px;
   z-index: 1000;
-  width: 320px;
-  max-width: calc(100vw - 40px);
-  border-radius: 18px;
-  padding: 16px;
+  width: 270px;
+  max-width: calc(100vw - 32px);
+  border-radius: 14px;
+  padding: 12px 14px;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 :root.dark .visitor-glass-card {
-  background: rgba(18, 22, 34, 0.86);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  background: rgba(18, 22, 34, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
 }
 
 .card-header {
@@ -419,41 +382,42 @@ onMounted(() => {
 .card-user-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .avatar-gradient {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
 }
 
 .avatar-gradient svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .user-badge {
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
+  line-height: 1.2;
 }
 
 .user-sub {
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   color: var(--vp-c-text-3);
   margin-top: 1px;
 }
 
 .close-card-btn {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -469,89 +433,93 @@ onMounted(() => {
   color: var(--vp-c-text-1);
 }
 
+:root.dark .close-card-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .close-card-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
 }
 
 .card-divider {
   height: 1px;
   background: var(--vp-c-divider);
-  margin: 12px 0;
+  margin: 9px 0 8px 0;
 }
 
 .card-details-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .detail-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.82rem;
-  padding: 4px 0;
+  font-size: 0.74rem;
+  padding: 1px 0;
 }
 
 .detail-label {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   color: var(--vp-c-text-2);
 }
 
 .detail-label svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   color: var(--vp-c-text-3);
 }
 
 .detail-val {
   font-weight: 600;
   color: var(--vp-c-text-1);
-  max-width: 160px;
+  max-width: 140px;
   text-align: right;
 }
 
 .ip-highlight {
   color: var(--vp-c-brand-1);
-  font-size: 0.86rem;
+  font-size: 0.76rem;
 }
 
 .card-footer {
-  margin-top: 12px;
-  padding-top: 8px;
+  margin-top: 9px;
+  padding-top: 6px;
   border-top: 1px dashed var(--vp-c-divider);
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
+  gap: 5px;
+  font-size: 0.66rem;
   color: var(--vp-c-text-3);
 }
 
 .card-status-dot {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: #10b981;
 }
 
 /* 动效 */
 .fade-slide-enter-active, .fade-slide-leave-active {
-  transition: all 0.35s ease;
+  transition: all 0.3s ease;
 }
 .fade-slide-enter-from, .fade-slide-leave-to {
   opacity: 0;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(15px);
 }
 
 .scale-fade-enter-active, .scale-fade-leave-active {
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .scale-fade-enter-from, .scale-fade-leave-to {
   opacity: 0;
-  transform: scale(0.9) translateY(10px);
+  transform: scale(0.92) translateY(8px);
 }
 
 @media (max-width: 640px) {
@@ -561,10 +529,10 @@ onMounted(() => {
   .visitor-glass-card {
     left: 50%;
     transform: translateX(-50%);
-    bottom: 70px;
+    bottom: 44px;
   }
   .scale-fade-enter-from, .scale-fade-leave-to {
-    transform: translateX(-50%) scale(0.95) translateY(10px);
+    transform: translateX(-50%) scale(0.95) translateY(8px);
   }
 }
 </style>
