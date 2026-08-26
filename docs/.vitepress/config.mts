@@ -52,7 +52,8 @@ export default defineConfig({
         items: [
           { text: '家庭宽带 (Residential) 声明', link: '/notices/residential' },
           { text: '香港服务器 DD 纯净重装', link: '/notices/reinstall' },
-          { text: '售后支持与退款规范', link: '/notices/support' }
+          { text: '售后支持与退款规范', link: '/notices/support' },
+          { text: '免费产品使用须知', link: '/notices/free-terms' }
         ]
       },
       {
