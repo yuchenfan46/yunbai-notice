@@ -20,5 +20,4 @@ From Interest to Practice · 从兴趣到实践
 
 | 成员 | 角色与说明 | 联系 / 主页 |
 | :--- | :--- | :--- |
-| **主核Kernyr** | 核心开发者 | [QQ 联系](https://qm.qq.com/q/y0o6LuKsy4) |
 | **云白 (Owner)** | 平台创始人 / 架构管理 | [Telegram / IM 联系](https://t.me/fng8129336) |
