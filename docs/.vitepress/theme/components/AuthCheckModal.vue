@@ -20,12 +20,11 @@ import { ref, onMounted } from 'vue'
 const isClosed = ref(false)
 
 onMounted(() => {
-  // 请求机器人授权接口检测
   fetch('https://auth.yunbai.icu/api/RobotApi/query_robot?appid=1')
     .then(r => r.json())
     .then(res => {
-      // code 为 0 时触发关闭提示；code 为 1 时正常打开放行
-      if (res && String(res.code) === '0') {
+      // 1 为开启授权（即未关闭授权状态），其他状态为关闭授权
+      if (res && String(res.code) === '1') {
         isClosed.value = true
         if (typeof document !== 'undefined') {
           document.body.style.overflow = 'hidden'
@@ -33,7 +32,7 @@ onMounted(() => {
       }
     })
     .catch(() => {
-      // 接口请求异常处理
+      // 网络或接口异常时保持默认放行
     })
 })
 </script>
