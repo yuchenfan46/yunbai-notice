@@ -6,14 +6,13 @@ import OnlineNotice from './components/OnlineNotice.vue'
 import SponsorSection from './components/SponsorSection.vue'
 import FriendLinks from './components/FriendLinks.vue'
 import VisitorInfo from './components/VisitorInfo.vue'
-import AuthCheckModal from './components/AuthCheckModal.vue'
 import './custom.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
-      'layout-bottom': () => [h(VisitorInfo), h(AuthCheckModal)]
+      'layout-bottom': () => h(VisitorInfo)
     })
   },
   enhanceApp({ app }) {
@@ -23,6 +22,5 @@ export default {
     app.component('SponsorSection', SponsorSection)
     app.component('FriendLinks', FriendLinks)
     app.component('VisitorInfo', VisitorInfo)
-    app.component('AuthCheckModal', AuthCheckModal)
   }
 }
