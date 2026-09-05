@@ -219,22 +219,22 @@ hr {
 
 /* 
  * 🌟 首页（VPHome）全套毛玻璃卡片质感同步升级！
- * 包括：Features特性卡片、时间里程碑卡片、生态链接卡片、折叠面板卡片、底部欢迎卡片
+ * 包括：Features特性卡片、时间里程碑卡片、生态链接卡片、折叠面板每一项卡片、底部欢迎卡片
  */
 .VPHome .VPFeature,
 .VPHome .timer-card,
 .VPHome .project-card,
 .VPHome .sponsor-card,
 .VPHome .friend-card,
-.VPHome .online-accordion,
+.VPHome .online-accordion-item,
 .VPHome .tip.custom-block {
   background: rgba(20, 20, 24, 0.45) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 16px !important;
+  border-radius: 14px !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
-  transition: all 0.3s ease !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.25s ease !important;
 }
 
 :root:not(.dark) .VPHome .VPFeature,
@@ -242,11 +242,11 @@ hr {
 :root:not(.dark) .VPHome .project-card,
 :root:not(.dark) .VPHome .sponsor-card,
 :root:not(.dark) .VPHome .friend-card,
-:root:not(.dark) .VPHome .online-accordion,
+:root:not(.dark) .VPHome .online-accordion-item,
 :root:not(.dark) .VPHome .tip.custom-block {
   background: rgba(255, 255, 255, 0.55) !important;
   border: 1px solid rgba(255, 255, 255, 0.45) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* 首页卡片悬停轻微浮起与高亮，增强互动手感 */
@@ -254,8 +254,10 @@ hr {
 .VPHome .timer-card:hover,
 .VPHome .project-card:hover,
 .VPHome .sponsor-card:hover,
-.VPHome .friend-card:hover {
-  transform: translateY(-3px) !important;
+.VPHome .friend-card:hover,
+.VPHome .online-accordion-item:hover,
+.VPHome .online-accordion-item.active {
+  transform: translateY(-2px) !important;
   border-color: var(--vp-c-brand-1) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22) !important;
 }
