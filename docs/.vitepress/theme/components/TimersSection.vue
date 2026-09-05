@@ -41,8 +41,12 @@
           <span class="digit-num">{{ tSec.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tSec.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
-        <div v-show="showSecurityStory" class="timer-story">
-          当时迷之自信，物理机被黑被当跳板机导致停机资料全丢。留下了深深的教训，警钟长鸣。
+        <div class="timer-collapse-wrapper" :class="{ expanded: showSecurityStory }">
+          <div class="timer-collapse-inner">
+            <div class="timer-story">
+              当时迷之自信，物理机被黑被当跳板机导致停机资料全丢。留下了深深的教训，警钟长鸣。
+            </div>
+          </div>
         </div>
         <div class="timer-meta">事故发生：2025年06月29日</div>
       </div>
@@ -167,6 +171,7 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 16px;
+  align-items: start; /* 保持每张卡片独立高度，展开单张卡片时其它卡片不被强行拉伸或变动 */
 }
 .timer-card {
   border: 1px solid var(--vp-c-divider);
@@ -176,7 +181,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: all 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 .timer-card:hover {
   border-color: var(--vp-c-brand-1);
@@ -226,7 +231,7 @@ onUnmounted(() => {
   width: 16px;
   height: 16px;
   color: var(--vp-c-text-3);
-  transition: transform 0.3s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .timer-card.active .chevron {
   transform: rotate(180deg);
@@ -247,15 +252,48 @@ onUnmounted(() => {
 .highlight {
   color: var(--vp-c-brand-1);
 }
+
+/* 折叠展开平滑动画与容器自适应 */
+.timer-collapse-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.timer-collapse-wrapper.expanded {
+  grid-template-rows: 1fr;
+}
+.timer-collapse-inner {
+  overflow: hidden;
+}
+
 .timer-story {
   font-size: 0.85rem;
   line-height: 1.6;
   color: var(--vp-c-text-2);
-  background: var(--vp-c-bg);
-  padding: 10px;
-  border-radius: 6px;
+  background: var(--vp-c-bg, rgba(20, 20, 24, 0.5));
+  padding: 10px 12px;
+  border-radius: 8px;
   border-left: 3px solid #ef4444;
+  max-height: 72px; /* 固定约 3 行高度 */
+  overflow-y: auto; /* 超出内容可平滑滚动 */
+  overscroll-behavior: contain;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* 滚动条轻量化 */
+.timer-story::-webkit-scrollbar {
+  width: 4px;
+}
+.timer-story::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.timer-collapse-wrapper.expanded .timer-story {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .timer-meta {
   font-size: 0.75rem;
   color: var(--vp-c-text-3);

@@ -29,11 +29,15 @@
           </div>
           <svg class="online-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="online-accordion-content" v-show="activeKey === 'notice-' + nIdx">
-          <div class="online-inner">
-            <div class="online-inner-divider"></div>
-            <div class="online-meta">📅 {{ notice.time || '未知' }} &nbsp;·&nbsp; 👤 {{ notice.username || '系统' }}</div>
-            <div class="online-content-text" v-html="notice.content"></div>
+        <div class="online-collapse-wrapper" :class="{ expanded: activeKey === 'notice-' + nIdx }">
+          <div class="online-collapse-inner">
+            <div class="online-accordion-content">
+              <div class="online-inner">
+                <div class="online-inner-divider"></div>
+                <div class="online-meta">📅 {{ notice.time || '未知' }} &nbsp;·&nbsp; 👤 {{ notice.username || '系统' }}</div>
+                <div class="online-content-text" v-html="notice.content"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +140,7 @@ onMounted(() => {
   background: var(--vp-c-bg-soft);
   border-radius: 10px;
   overflow: hidden;
-  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 .online-accordion-item:hover {
   border-color: var(--vp-c-brand-1);
@@ -182,15 +186,37 @@ onMounted(() => {
   width: 18px;
   height: 18px;
   color: var(--vp-c-text-3);
-  transition: transform 0.3s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .online-accordion-item.active .online-chevron-icon {
   transform: rotate(180deg);
   color: var(--vp-c-brand-1);
 }
+
+/* 平滑高度展开/折叠过渡动画 (CSS Grid 0fr -> 1fr 现代丝滑动画方案) */
+.online-collapse-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.online-collapse-wrapper.expanded {
+  grid-template-rows: 1fr;
+}
+.online-collapse-inner {
+  overflow: hidden;
+}
+
 .online-accordion-content {
   padding: 0 18px 18px 18px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.online-collapse-wrapper.expanded .online-accordion-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .online-inner-divider {
   height: 1px;
   background: var(--vp-c-divider);
