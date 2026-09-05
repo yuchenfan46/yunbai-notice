@@ -111,3 +111,37 @@ body::before {
 .VPHome {
   background: transparent !important;
 }
+
+/* 侧边栏与文档容器半透明磨砂优化，让背景图更通透 */
+.VPSidebar,
+aside.VPSidebar,
+.VPSidebarNav {
+  background-color: transparent !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-right: 1px solid var(--vp-c-divider) !important;
+}
+
+.dark .VPSidebar,
+.dark aside.VPSidebar,
+.dark .VPSidebarNav {
+  background: rgba(24, 24, 27, 0.45) !important;
+}
+
+.VPContent,
+.VPDoc {
+  background-color: transparent !important;
+}
+
+.VPNavBar,
+.VPNav {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.dark .VPNavBar,
+.dark .VPNav {
+  background: rgba(24, 24, 27, 0.6) !important;
+}

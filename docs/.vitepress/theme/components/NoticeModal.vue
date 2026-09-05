@@ -68,7 +68,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const STORAGE_KEY = '***'
+const STORAGE_KEY = 'yunbai_notice_modal_confirmed_v2'
 const visible = ref(false)
 const countdown = ref(10)
 let timer = null
@@ -87,7 +87,7 @@ const unlockScroll = () => {
   }
 }
 
-onMounted(() => {
+const triggerModal = () => {
   try {
     const confirmed = localStorage.getItem(STORAGE_KEY)
     if (!confirmed) {
@@ -103,8 +103,18 @@ onMounted(() => {
         }
       }, 1000)
     }
-  } catch (e) {
-    // 兼容受限环境
+  } catch (e) {}
+}
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'complete') {
+      setTimeout(triggerModal, 150)
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(triggerModal, 150)
+      }, { once: true })
+    }
   }
 })
 
