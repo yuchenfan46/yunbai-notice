@@ -225,7 +225,7 @@ hr {
 .VPHome .timer-card,
 .VPHome .project-card,
 .VPHome .sponsor-card,
-.VPHome .friend-card,
+.VPHome .link-card, .VPHome .friend-card,
 .VPHome .online-accordion-item,
 .VPHome .tip.custom-block {
   background: rgba(20, 20, 24, 0.45) !important;
@@ -241,7 +241,7 @@ hr {
 :root:not(.dark) .VPHome .timer-card,
 :root:not(.dark) .VPHome .project-card,
 :root:not(.dark) .VPHome .sponsor-card,
-:root:not(.dark) .VPHome .friend-card,
+:root:not(.dark) .VPHome .link-card, .VPHome .friend-card,
 :root:not(.dark) .VPHome .online-accordion-item,
 :root:not(.dark) .VPHome .tip.custom-block {
   background: rgba(255, 255, 255, 0.55) !important;
@@ -254,7 +254,7 @@ hr {
 .VPHome .timer-card:hover,
 .VPHome .project-card:hover,
 .VPHome .sponsor-card:hover,
-.VPHome .friend-card:hover,
+.VPHome .link-card:hover, .VPHome .friend-card:hover,
 .VPHome .online-accordion-item:hover,
 .VPHome .online-accordion-item.active {
   transform: translateY(-2px) !important;
