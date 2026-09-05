@@ -4,9 +4,9 @@
   --vp-c-brand-3: #60a5fa;
   --vp-c-brand-soft: rgba(37, 99, 235, 0.14);
 
-  /* 全局分割线与边框微弱化/透明化 */
-  --vp-c-divider: rgba(255, 255, 255, 0.08) !important;
-  --vp-c-border: rgba(255, 255, 255, 0.08) !important;
+  /* 全局分割线与边框彻底微透无痕 */
+  --vp-c-divider: rgba(255, 255, 255, 0.04) !important;
+  --vp-c-border: rgba(255, 255, 255, 0.04) !important;
   --vp-c-gutter: transparent !important;
 }
 
@@ -16,8 +16,8 @@
   --vp-c-brand-3: #2563eb;
   --vp-c-brand-soft: rgba(96, 165, 250, 0.14);
 
-  --vp-c-divider: rgba(255, 255, 255, 0.08) !important;
-  --vp-c-border: rgba(255, 255, 255, 0.08) !important;
+  --vp-c-divider: rgba(255, 255, 255, 0.04) !important;
+  --vp-c-border: rgba(255, 255, 255, 0.04) !important;
   --vp-c-gutter: transparent !important;
 }
 
@@ -70,7 +70,7 @@ button:focus,
   box-shadow: none !important;
 }
 
-/* 全局二次元背景壁纸 (来自云白接口) - 提升通透度和清晰度 */
+/* 全局二次元背景壁纸 (来自云白接口) - 更加鲜艳透亮 */
 body::before {
   content: "";
   position: fixed;
@@ -84,13 +84,13 @@ body::before {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.55 !important;
+  opacity: 0.70 !important;
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
 .dark body::before {
-  opacity: 0.45 !important;
+  opacity: 0.60 !important;
 }
 
 /* 消除所有底层默认黑色背景，整站背景与文字容器全透明化 */
@@ -125,7 +125,7 @@ body,
   background-color: transparent !important;
 }
 
-/* 侧边栏全面透明，彻底去除右侧黑色/生硬边框线，消除断层 */
+/* 侧边栏全面纯透明，无任何杂色遮挡 */
 .VPSidebar,
 aside.VPSidebar,
 .VPSidebarNav,
@@ -142,7 +142,7 @@ aside.VPSidebar,
   -webkit-backdrop-filter: none !important;
 }
 
-/* 顶部导航栏「服务平台」整行透明度与侧边栏/整体保持一致，去除底部粗黑线 */
+/* 顶部导航栏「服务平台」整行纯透明，去除所有黑线与背景 */
 .VPNav,
 .VPNavBar,
 .VPNavBarTitle,
@@ -176,11 +176,11 @@ aside.VPSidebar,
   -webkit-backdrop-filter: none !important;
 }
 
-/* 正文标题边框与分割线全面优化：去除生硬黑线，改为极淡柔和半透线 */
+/* 正文标题与分割线全面去黑线 */
 .vp-doc hr,
 hr {
   border: none !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
   margin: 24px 0 !important;
 }
 
@@ -192,23 +192,42 @@ hr {
   border-bottom: none !important;
 }
 
-/* 正文容器极淡透光磨砂衬底（可读性与壁纸通透兼备） */
+/* 正文容器极微透（透明度大幅提升，壁纸直透无遮挡，文字加微阴影保可读） */
 .VPDoc:not(.has-sidebar) .container,
 .VPDoc.has-sidebar .content-container {
-  background: rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.08) !important;
   padding: 24px;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
 }
 
 :root:not(.dark) .VPDoc:not(.has-sidebar) .container,
 :root:not(.dark) .VPDoc.has-sidebar .content-container {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.18) !important;
   padding: 24px;
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
+}
+
+/* 为正文字体加微弱文字投影，保障在超高透明度/无遮挡壁纸下依然清晰锐利 */
+.vp-doc p,
+.vp-doc li,
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+:root:not(.dark) .vp-doc p,
+:root:not(.dark) .vp-doc li,
+:root:not(.dark) .vp-doc h1,
+:root:not(.dark) .vp-doc h2,
+:root:not(.dark) .vp-doc h3,
+:root:not(.dark) .vp-doc h4 {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
 }
