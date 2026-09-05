@@ -62,3 +62,52 @@ button:focus,
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* 全局二次元背景壁纸 (来自云白接口) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: url('https://v2.api.yunbai.icu/api/acg/api.php');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.18;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.dark body::before {
+  opacity: 0.12;
+}
+
+/* 适配 VitePress 默认背景半透明以透出背景图 */
+:root {
+  --vp-c-bg: rgba(255, 255, 255, 0.88);
+  --vp-c-bg-alt: rgba(246, 246, 247, 0.82);
+  --vp-c-bg-elv: rgba(255, 255, 255, 0.92);
+  --vp-c-bg-soft: rgba(246, 246, 247, 0.75);
+}
+
+.dark {
+  --vp-c-bg: rgba(26, 26, 26, 0.88);
+  --vp-c-bg-alt: rgba(22, 22, 22, 0.82);
+  --vp-c-bg-elv: rgba(30, 30, 30, 0.92);
+  --vp-c-bg-soft: rgba(37, 37, 41, 0.75);
+}
+
+/* 导航栏与侧边栏磨砂毛玻璃效果 */
+.VPNav,
+.VPSidebar {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.VPHome {
+  background: transparent !important;
+}
