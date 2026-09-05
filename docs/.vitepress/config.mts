@@ -48,14 +48,19 @@ export default defineConfig({
         ]
       },
       {
-        text: '云平台服务与技术指南',
+        text: '云平台服务规则',
         items: [
           { text: '家庭宽带 (Residential) 声明', link: '/notices/residential' },
-          { text: '服务器 DD 纯净重装', link: '/notices/reinstall' },
-          { text: '系统换软件源与 Docker', link: '/notices/mirrors' },
           { text: '售后支持与服务规范', link: '/notices/support' },
           { text: '退款保障与售后细则', link: '/notices/refund' },
           { text: '免费产品使用须知', link: '/notices/free-terms' }
+        ]
+      },
+      {
+        text: '技术指南',
+        items: [
+          { text: '服务器 DD 纯净重装', link: '/notices/reinstall' },
+          { text: '系统换软件源与 Docker', link: '/notices/mirrors' }
         ]
       },
       {
