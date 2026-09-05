@@ -52,10 +52,10 @@ const copyQQ = () => {
   - **独立独享：** 如需一人独享整条独立线路与公网 IP，价格另外计算。
 - **联系与咨询方式：**
   - **QQ 咨询：** 
-    <button @click="copyQQ" style="cursor: pointer; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; font-size: 0.95em; transition: all 0.2s; margin-left: 4px;">
-      {{ qqCopied ? "✅ 已复制 QQ: 2171129194" : "📋 点击复制 QQ: 2171129194" }}
+    <button @click="copyQQ" style="cursor: pointer; padding: 4px 14px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; font-size: 0.95em; transition: all 0.2s; margin-left: 4px;">
+      {{ qqCopied ? "✅ 已复制 QQ 号" : "📋 点击复制 QQ 号" }}
     </button>
   - **客户服务邮箱：** 
-    <a href="mailto:support@mail.yunbai.org" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; text-decoration: none; font-size: 0.95em; margin-left: 4px;">
-      ✉️ 打开邮件客户端发送：support@mail.yunbai.org
+    <a href="mailto:support@mail.yunbai.org" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 14px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; text-decoration: none; font-size: 0.95em; margin-left: 4px;">
+      ✉️ 点击直接发送邮件
     </a>
