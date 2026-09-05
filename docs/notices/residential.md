@@ -1,3 +1,31 @@
+<script setup>
+import { ref } from "vue"
+
+const qqCopied = ref(false)
+
+const copyQQ = () => {
+  if (navigator && navigator.clipboard) {
+    navigator.clipboard.writeText("2171129194").then(() => {
+      qqCopied.value = true
+      setTimeout(() => {
+        qqCopied.value = false
+      }, 2000)
+    })
+  } else {
+    const input = document.createElement("input")
+    input.value = "2171129194"
+    document.body.appendChild(input)
+    input.select()
+    document.execCommand("copy")
+    document.body.removeChild(input)
+    qqCopied.value = true
+    setTimeout(() => {
+      qqCopied.value = false
+    }, 2000)
+  }
+}
+</script>
+
 # 家庭宽带 (Residential IP) 业务声明
 
 深度声明与购买风险准则
@@ -19,8 +47,14 @@
   - **拼车合租：** 目前有组织真住宅拼车车位，费用大约为 **20 多元 / 月**；
   - **独立独享：** 如需一人独享整条独立线路与公网 IP，价格另外计算。
 - **联系与咨询方式：**
-  - QQ 咨询：`2171129194`
-  - 客户服务邮箱：`support@mail.yunbai.org`
+  - **QQ 咨询：** 
+    <button @click="copyQQ" style="cursor: pointer; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; font-size: 0.95em; transition: all 0.2s; margin-left: 4px;">
+      {{ qqCopied ? "✅ 已复制 QQ: 2171129194" : "📋 点击复制 QQ: 2171129194" }}
+    </button>
+  - **客户服务邮箱：** 
+    <a href="mailto:support@mail.yunbai.org" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; text-decoration: none; font-size: 0.95em; margin-left: 4px;">
+      ✉️ 打开邮件客户端发送：support@mail.yunbai.org
+    </a>
 
 ::: tip 唯一硬性的服务保障：流媒体解锁
 虽然常规节点无法保证所有 IP 的绝对原生性，但我方提供唯一的硬性保障协议：**保证流媒体全解锁**。您可以完美流畅地访问包括 Netflix（网飞）、Disney+、Hulu 等主流平台。对线路“纯净风控画像”有极端要求的客户请知悉风险；若主要诉求是解锁流媒体，则可放心使用。
