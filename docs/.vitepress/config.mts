@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: '云白服务平台',
+  title: '服务平台',
   description: '综合公告、业务规则、用户协议与公益生态',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   themeConfig: {
     logo: { text: '🐾 YUNBAI' },
-    siteTitle: '云白服务平台',
+    siteTitle: '服务平台',
     nav: [
       { text: '首页', link: '/' },
       { text: '群规与边界', link: '/rules/group' },
