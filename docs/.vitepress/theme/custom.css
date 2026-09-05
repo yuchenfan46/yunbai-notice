@@ -3,11 +3,6 @@
   --vp-c-brand-2: #3b82f6;
   --vp-c-brand-3: #60a5fa;
   --vp-c-brand-soft: rgba(37, 99, 235, 0.14);
-
-  /* 全局分割线与边框彻底微透无痕 */
-  --vp-c-divider: rgba(255, 255, 255, 0.04) !important;
-  --vp-c-border: rgba(255, 255, 255, 0.04) !important;
-  --vp-c-gutter: transparent !important;
 }
 
 .dark {
@@ -15,10 +10,6 @@
   --vp-c-brand-2: #3b82f6;
   --vp-c-brand-3: #2563eb;
   --vp-c-brand-soft: rgba(96, 165, 250, 0.14);
-
-  --vp-c-divider: rgba(255, 255, 255, 0.04) !important;
-  --vp-c-border: rgba(255, 255, 255, 0.04) !important;
-  --vp-c-gutter: transparent !important;
 }
 
 .warning-red {
@@ -70,7 +61,7 @@ button:focus,
   box-shadow: none !important;
 }
 
-/* 全局二次元背景壁纸 (来自云白接口) - 更加鲜艳透亮 */
+/* 全局二次元背景壁纸 (来自云白接口) - 保持清晰度 */
 body::before {
   content: "";
   position: fixed;
@@ -84,79 +75,88 @@ body::before {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.70 !important;
+  opacity: 0.35 !important;
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
 .dark body::before {
-  opacity: 0.60 !important;
+  opacity: 0.28 !important;
 }
 
-/* 消除所有底层默认黑色背景，整站背景与文字容器全透明化 */
+/* 恢复卡片与主题原本的毛玻璃与半透明质感，保留组件原有颜色与层次 */
 :root {
-  --vp-c-bg: transparent !important;
-  --vp-c-bg-alt: transparent !important;
-  --vp-c-bg-elv: transparent !important;
-  --vp-c-bg-soft: transparent !important;
-  --vp-sidebar-bg-color: transparent !important;
-  --vp-nav-bg-color: transparent !important;
+  --vp-c-bg: rgba(255, 255, 255, 0.88);
+  --vp-c-bg-alt: rgba(246, 246, 247, 0.82);
+  --vp-c-bg-elv: rgba(255, 255, 255, 0.92);
+  --vp-c-bg-soft: rgba(246, 246, 247, 0.75);
 }
 
 .dark {
-  --vp-c-bg: transparent !important;
-  --vp-c-bg-alt: transparent !important;
-  --vp-c-bg-elv: transparent !important;
-  --vp-c-bg-soft: transparent !important;
-  --vp-sidebar-bg-color: transparent !important;
-  --vp-nav-bg-color: transparent !important;
+  --vp-c-bg: rgba(26, 26, 26, 0.88);
+  --vp-c-bg-alt: rgba(22, 22, 22, 0.82);
+  --vp-c-bg-elv: rgba(30, 30, 30, 0.92);
+  --vp-c-bg-soft: rgba(37, 37, 41, 0.75);
 }
 
-html,
-body,
-#app,
-.Layout,
-.VPContent,
-.VPContentDoc,
-.VPDoc,
-.VPHome,
-.VPApp {
+.VPHome {
   background: transparent !important;
-  background-color: transparent !important;
 }
 
-/* 侧边栏全面纯透明，无任何杂色遮挡 */
+/* 导航栏与侧边栏：采用精致毛玻璃磨砂效果 */
+.VPNav,
+.VPSidebar {
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+/* 侧边栏与内部容器纯色消除，保持单层毛玻璃质感，杜绝色差断层与黑线 */
 .VPSidebar,
 aside.VPSidebar,
-.VPSidebarNav,
-.VPSidebar .curtain,
-.group,
-.nav-group,
-.items {
-  background: transparent !important;
-  background-color: transparent !important;
-  box-shadow: none !important;
+.VPSidebarNav {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   border-right: none !important;
-  border: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
 }
 
-/* 顶部导航栏「服务平台」整行纯透明，去除所有黑线与背景 */
-.VPNav,
-.VPNavBar,
-.VPNavBarTitle,
-.VPNavBarMenu,
-.VPNavBarSearch,
-.VPNavBarExtra,
-.VPNavScreen {
+.dark .VPSidebar,
+.dark aside.VPSidebar,
+.dark .VPSidebarNav {
+  background: rgba(24, 24, 27, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-right: none !important;
+}
+
+/* 侧边栏内部子列表完全透明，不再叠加多层色块 */
+.VPSidebar .curtain,
+.VPSidebar .group,
+.VPSidebar .nav-group,
+.VPSidebar .items {
   background: transparent !important;
   background-color: transparent !important;
-  border-bottom: none !important;
-  border: none !important;
   box-shadow: none !important;
 }
 
+/* 顶部导航栏「服务平台」：与整体毛玻璃磨砂统一 */
+.VPNavBar,
+.VPNav {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: none !important;
+}
+
+.dark .VPNavBar,
+.dark .VPNav {
+  background: rgba(24, 24, 27, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: none !important;
+}
+
+/* 消除顶部 title 默认的生硬下边框 */
 .title,
 .VPNavBarTitle .title,
 .VPNavBarTitle.has-sidebar .title {
@@ -164,70 +164,17 @@ aside.VPSidebar,
   border: none !important;
 }
 
-.VPNav {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+/* 文档内容容器透明，让背景图自然透出 */
+.VPContent,
+.VPDoc {
+  background-color: transparent !important;
 }
 
-:root:not(.dark) .VPNav {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-/* 正文标题与分割线全面去黑线 */
-.vp-doc hr,
-hr {
-  border: none !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-  margin: 24px 0 !important;
-}
-
+/* 正文标题去除粗黑线，保持视觉清爽 */
 .vp-doc h1,
 .vp-doc h2,
 .vp-doc h3,
 .vp-doc h4 {
   border-top: none !important;
   border-bottom: none !important;
-}
-
-/* 正文容器极微透（透明度大幅提升，壁纸直透无遮挡，文字加微阴影保可读） */
-.VPDoc:not(.has-sidebar) .container,
-.VPDoc.has-sidebar .content-container {
-  background: rgba(0, 0, 0, 0.08) !important;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(2px) !important;
-  -webkit-backdrop-filter: blur(2px) !important;
-}
-
-:root:not(.dark) .VPDoc:not(.has-sidebar) .container,
-:root:not(.dark) .VPDoc.has-sidebar .content-container {
-  background: rgba(255, 255, 255, 0.18) !important;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(2px) !important;
-  -webkit-backdrop-filter: blur(2px) !important;
-}
-
-/* 为正文字体加微弱文字投影，保障在超高透明度/无遮挡壁纸下依然清晰锐利 */
-.vp-doc p,
-.vp-doc li,
-.vp-doc h1,
-.vp-doc h2,
-.vp-doc h3,
-.vp-doc h4 {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-}
-
-:root:not(.dark) .vp-doc p,
-:root:not(.dark) .vp-doc li,
-:root:not(.dark) .vp-doc h1,
-:root:not(.dark) .vp-doc h2,
-:root:not(.dark) .vp-doc h3,
-:root:not(.dark) .vp-doc h4 {
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
 }
