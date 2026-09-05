@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: "YUNBAI"
-  text: "云白服务平台"
+  text: "服务平台"
   tagline: "From Interest to Practice · 从兴趣到实践"
   actions:
     - theme: brand
