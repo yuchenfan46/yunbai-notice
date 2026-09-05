@@ -50,6 +50,7 @@ const copyQQ = () => {
 - **拼车与独享价格：** 
   - **拼车合租：** 目前有组织真住宅拼车车位，费用大约为 **20 多元 / 月**；
   - **独立独享：** 如需一人独享整条独立线路与公网 IP，价格另外计算。
+- **探针监控说明：** 可协助接入您自己的探针（如哪吒等），但出于安全隔离，**会严格禁用远程 Web SSH 终端及其他远程控制功能**，您仅能查看机主当前的网络流量以及系统硬件占用状态。
 - **联系与咨询方式：**
   - **QQ 咨询：** 
     <button @click="copyQQ" style="cursor: pointer; padding: 4px 14px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; font-size: 0.95em; transition: all 0.2s; margin-left: 4px;">
