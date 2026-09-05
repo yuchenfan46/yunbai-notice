@@ -2,8 +2,13 @@
   <ClientOnly>
     <Teleport to="body">
       <Transition name="modal-fade">
-        <div v-if="visible" class="home-modal-overlay">
-          <div class="home-modal-card">
+        <div 
+          v-if="visible" 
+          class="home-modal-overlay" 
+          @wheel.prevent 
+          @touchmove.prevent
+        >
+          <div class="home-modal-card" @wheel.stop @touchmove.stop>
             <div class="home-modal-header">
               <div class="header-tag">📢 平台业务重要调整</div>
               <h3 class="home-modal-title">香港业务关停与对接/代购说明</h3>
@@ -68,11 +73,26 @@ const visible = ref(false)
 const countdown = ref(10)
 let timer = null
 
+const lockScroll = () => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+  }
+}
+
+const unlockScroll = () => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = ''
+    document.documentElement.style.overflow = ''
+  }
+}
+
 onMounted(() => {
   try {
     const confirmed = localStorage.getItem(STORAGE_KEY)
     if (!confirmed) {
       visible.value = true
+      lockScroll()
       timer = setInterval(() => {
         if (countdown.value > 1) {
           countdown.value--
@@ -89,6 +109,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  unlockScroll()
   if (timer) {
     clearInterval(timer)
   }
@@ -99,6 +120,7 @@ const handleConfirm = () => {
   try {
     localStorage.setItem(STORAGE_KEY, '1')
   } catch (e) {}
+  unlockScroll()
   visible.value = false
 }
 </script>
@@ -118,6 +140,8 @@ const handleConfirm = () => {
   align-items: center;
   justify-content: center;
   padding: 16px;
+  touch-action: none;
+  overscroll-behavior: contain;
 }
 
 .home-modal-card {
@@ -130,6 +154,7 @@ const handleConfirm = () => {
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   animation: modal-pop 0.25s ease-out;
+  touch-action: auto;
 }
 
 @keyframes modal-pop {
