@@ -75,69 +75,103 @@ body::before {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.35 !important;
+  opacity: 0.45 !important;
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
 .dark body::before {
-  opacity: 0.28 !important;
+  opacity: 0.35 !important;
 }
 
-/* 深度透光：整站背景与侧边栏极致通透 */
+/* 消除所有底层默认黑色背景，整站背景与文字容器全透明化 */
 :root {
-  --vp-c-bg: rgba(255, 255, 255, 0.75);
-  --vp-c-bg-alt: rgba(246, 246, 247, 0.65);
-  --vp-c-bg-elv: rgba(255, 255, 255, 0.82);
-  --vp-c-bg-soft: rgba(246, 246, 247, 0.55);
+  --vp-c-bg: transparent !important;
+  --vp-c-bg-alt: transparent !important;
+  --vp-c-bg-elv: transparent !important;
+  --vp-c-bg-soft: transparent !important;
+  --vp-sidebar-bg-color: transparent !important;
+  --vp-nav-bg-color: transparent !important;
 }
 
 .dark {
-  --vp-c-bg: rgba(24, 24, 27, 0.75);
-  --vp-c-bg-alt: rgba(20, 20, 22, 0.65);
-  --vp-c-bg-elv: rgba(28, 28, 30, 0.82);
-  --vp-c-bg-soft: rgba(35, 35, 38, 0.55);
+  --vp-c-bg: transparent !important;
+  --vp-c-bg-alt: transparent !important;
+  --vp-c-bg-elv: transparent !important;
+  --vp-c-bg-soft: transparent !important;
+  --vp-sidebar-bg-color: transparent !important;
+  --vp-nav-bg-color: transparent !important;
 }
 
-/* 侧边栏全面极简通透（几乎全透 + 轻微磨砂） */
-.VPSidebar,
-aside.VPSidebar,
-.VPSidebarNav,
-.VPSidebar .curtain,
-.group {
-  background-color: transparent !important;
-  background: rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(6px) !important;
-  -webkit-backdrop-filter: blur(6px) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
-}
-
-.dark .VPSidebar,
-.dark aside.VPSidebar,
-.dark .VPSidebarNav,
-.dark .VPSidebar .curtain,
-.dark .group {
-  background: rgba(0, 0, 0, 0.15) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-/* 文档主内容区去除背景遮挡 */
+html,
+body,
+#app,
+.Layout,
 .VPContent,
+.VPContentDoc,
 .VPDoc,
-.VPHome {
+.VPHome,
+.VPApp {
   background: transparent !important;
   background-color: transparent !important;
 }
 
-/* 顶部导航栏透明磨砂 */
-.VPNavBar,
-.VPNav {
-  background: rgba(255, 255, 255, 0.5) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+/* 侧边栏全面透明，彻底消除双层色差 */
+.VPSidebar,
+aside.VPSidebar,
+.VPSidebarNav,
+.VPSidebar .curtain,
+.group,
+.nav-group,
+.items {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-.dark .VPNavBar,
-.dark .VPNav {
-  background: rgba(18, 18, 20, 0.5) !important;
+/* 顶部导航栏「服务平台」整行透明化并加入轻盈磨砂 */
+.VPNav,
+.VPNavBar,
+.VPNavBarTitle,
+.VPNavBarMenu,
+.VPNavBarSearch,
+.VPNavBarExtra,
+.VPNavScreen {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.VPNav {
+  background: rgba(0, 0, 0, 0.18) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+:root:not(.dark) .VPNav {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* 保持正文区域文字可读性，给正文容器极淡的微透底色 */
+.VPDoc:not(.has-sidebar) .container,
+.VPDoc.has-sidebar .content-container {
+  background: rgba(0, 0, 0, 0.12);
+  padding: 24px;
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+:root:not(.dark) .VPDoc:not(.has-sidebar) .container,
+:root:not(.dark) .VPDoc.has-sidebar .content-container {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 24px;
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
