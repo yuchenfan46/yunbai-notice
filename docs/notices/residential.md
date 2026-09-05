@@ -40,6 +40,10 @@ const copyQQ = () => {
 - **真实性免责：** IP 库变动极为频繁，对于常规节点的 100% 绝对纯正性，**本平台不做任何无死角的承诺，坦白讲我也无法给出绝对保证**。
 - **适用边界与建议：** 仅适用于对 IP 纯净度要求一般的常规业务。如果您从事的是极度严苛的风控业务（如高难度问卷调查、对物理宽带要求极高的金融/电商平台），**请务必谨慎考虑，我们强烈建议您不要盲目下单**，请在确认能够承受 IP 属性随时波动的潜在风险后再行购买。
 
+::: tip 唯一硬性的服务保障：流媒体解锁
+虽然常规节点无法保证所有 IP 的绝对原生性，但我方提供唯一的硬性保障协议：**保证流媒体全解锁**。您可以完美流畅地访问包括 Netflix（网飞）、Disney+、Hulu 等主流平台。对线路“纯净风控画像”有极端要求的客户请知悉风险；若主要诉求是解锁流媒体，则可放心使用。
+:::
+
 ## 🇺🇸 AT&T 真住宅物理宽带（定制咨询）
 
 - **真实性说明：** 上述常规节点均为广播/伪住宅；如果您确实有严苛业务需求、需要 **AT&T 美国真物理住宅宽带**，可直接联系咨询。
@@ -55,7 +59,3 @@ const copyQQ = () => {
     <a href="mailto:support@mail.yunbai.org" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--vp-c-brand-1, #3eaf7c); background: var(--vp-c-brand-soft, rgba(62,175,124,0.15)); color: var(--vp-c-brand-1, #3eaf7c); font-weight: 500; text-decoration: none; font-size: 0.95em; margin-left: 4px;">
       ✉️ 打开邮件客户端发送：support@mail.yunbai.org
     </a>
-
-::: tip 唯一硬性的服务保障：流媒体解锁
-虽然常规节点无法保证所有 IP 的绝对原生性，但我方提供唯一的硬性保障协议：**保证流媒体全解锁**。您可以完美流畅地访问包括 Netflix（网飞）、Disney+、Hulu 等主流平台。对线路“纯净风控画像”有极端要求的客户请知悉风险；若主要诉求是解锁流媒体，则可放心使用。
-:::
