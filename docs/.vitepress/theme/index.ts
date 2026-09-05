@@ -6,13 +6,15 @@ import OnlineNotice from './components/OnlineNotice.vue'
 import SponsorSection from './components/SponsorSection.vue'
 import FriendLinks from './components/FriendLinks.vue'
 import VisitorInfo from './components/VisitorInfo.vue'
+import NoticeModal from './components/NoticeModal.vue'
 import './custom.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
-      'layout-bottom': () => h(VisitorInfo)
+      'layout-bottom': () => h(VisitorInfo),
+      'layout-top': () => h(NoticeModal)
     })
   },
   enhanceApp({ app }) {
@@ -22,5 +24,6 @@ export default {
     app.component('SponsorSection', SponsorSection)
     app.component('FriendLinks', FriendLinks)
     app.component('VisitorInfo', VisitorInfo)
+    app.component('NoticeModal', NoticeModal)
   }
 }
