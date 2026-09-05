@@ -23,7 +23,6 @@
           <span class="digit-num">{{ tPit.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tPit.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
-        <div class="timer-story-placeholder"></div>
         <div class="timer-meta">起始时间：2024年08月20日</div>
       </div>
 
@@ -66,7 +65,6 @@
           <span class="digit-num">{{ tOnline.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tOnline.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
-        <div class="timer-story-placeholder"></div>
         <div class="timer-meta">上线时间：2026年02月27日 19:41</div>
       </div>
 
@@ -84,7 +82,6 @@
           <span class="digit-num">{{ tOci.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tOci.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
-        <div class="timer-story-placeholder"></div>
         <div class="timer-meta">注册时间：2025年07月17日</div>
       </div>
     </div>
@@ -183,9 +180,7 @@ onUnmounted(() => {
   padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-height: 220px; /* 固定预留高度，所有卡片保持一致，展开时不往下方推挤其他内容 */
-  justify-content: space-between;
+  gap: 12px;
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 .timer-card:hover {
@@ -316,14 +311,8 @@ onUnmounted(() => {
 }
 
 
-.timer-story-placeholder {
-  min-height: 52px;
-}
-.timer-story-box {
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-}
+
+
 
 .timer-meta {
   font-size: 0.75rem;
