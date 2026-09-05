@@ -23,6 +23,7 @@
           <span class="digit-num">{{ tPit.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tPit.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
+        <div class="timer-story-placeholder"></div>
         <div class="timer-meta">起始时间：2024年08月20日</div>
       </div>
 
@@ -65,6 +66,7 @@
           <span class="digit-num">{{ tOnline.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tOnline.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
+        <div class="timer-story-placeholder"></div>
         <div class="timer-meta">上线时间：2026年02月27日 19:41</div>
       </div>
 
@@ -82,6 +84,7 @@
           <span class="digit-num">{{ tOci.minutes }}</span> <span class="digit-unit">分</span>
           <span class="digit-num highlight">{{ tOci.seconds }}</span> <span class="digit-unit">秒</span>
         </div>
+        <div class="timer-story-placeholder"></div>
         <div class="timer-meta">注册时间：2025年07月17日</div>
       </div>
     </div>
@@ -180,7 +183,9 @@ onUnmounted(() => {
   padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  min-height: 220px; /* 固定预留高度，所有卡片保持一致，展开时不往下方推挤其他内容 */
+  justify-content: space-between;
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 .timer-card:hover {
@@ -217,9 +222,25 @@ onUnmounted(() => {
   background: rgba(245, 158, 11, 0.1);
   color: #f59e0b;
 }
+.timer-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 8px;
+  background: rgba(var(--vp-c-brand-1-rgb, 59, 130, 246), 0.1);
+  color: var(--vp-c-brand-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 .timer-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  display: block;
 }
 .timer-title {
   flex: 1;
@@ -292,6 +313,16 @@ onUnmounted(() => {
 .timer-collapse-wrapper.expanded .timer-story {
   opacity: 1;
   transform: translateY(0);
+}
+
+
+.timer-story-placeholder {
+  min-height: 52px;
+}
+.timer-story-box {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
 }
 
 .timer-meta {
