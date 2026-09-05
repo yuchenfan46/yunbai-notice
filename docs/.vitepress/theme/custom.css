@@ -125,7 +125,7 @@ body,
   background-color: transparent !important;
 }
 
-/* 侧边栏全面透明，彻底去除右侧黑色/生硬边框线，消除断层（保持满意的那一版） */
+/* 侧边栏全面透明，彻底去除右侧黑色/生硬边框线，消除断层（保持锁定满意的一版） */
 .VPSidebar,
 aside.VPSidebar,
 .VPSidebarNav,
@@ -142,7 +142,7 @@ aside.VPSidebar,
   -webkit-backdrop-filter: none !important;
 }
 
-/* 顶部导航栏「服务平台」整行透明度与侧边栏保持一致，去除底部粗黑线（保持满意的那一版） */
+/* 顶部导航栏「服务平台」整行透明度与侧边栏保持一致，去除底部粗黑线（保持锁定满意的一版） */
 .VPNav,
 .VPNavBar,
 .VPNavBarTitle,
@@ -193,8 +193,7 @@ hr {
 }
 
 /* 
- * 核心修改点：内容显示区域（显示字的地方）改为毛玻璃半透明卡片质感！
- * 既有精致的磨砂质感和柔和层次，文字看得清，又不会变成全透无遮挡
+ * 文档详情页面内容显示区域（显示字的地方）：毛玻璃磨砂卡片
  */
 .VPDoc:not(.has-sidebar) .container,
 .VPDoc.has-sidebar .content-container {
@@ -216,4 +215,47 @@ hr {
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 
+ * 🌟 首页（VPHome）全套毛玻璃卡片质感同步升级！
+ * 包括：Features特性卡片、时间里程碑卡片、生态链接卡片、折叠面板卡片、底部欢迎卡片
+ */
+.VPHome .VPFeature,
+.VPHome .timer-card,
+.VPHome .project-card,
+.VPHome .sponsor-card,
+.VPHome .friend-card,
+.VPHome .online-accordion,
+.VPHome .tip.custom-block {
+  background: rgba(20, 20, 24, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+:root:not(.dark) .VPHome .VPFeature,
+:root:not(.dark) .VPHome .timer-card,
+:root:not(.dark) .VPHome .project-card,
+:root:not(.dark) .VPHome .sponsor-card,
+:root:not(.dark) .VPHome .friend-card,
+:root:not(.dark) .VPHome .online-accordion,
+:root:not(.dark) .VPHome .tip.custom-block {
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 首页卡片悬停轻微浮起与高亮，增强互动手感 */
+.VPHome .VPFeature:hover,
+.VPHome .timer-card:hover,
+.VPHome .project-card:hover,
+.VPHome .sponsor-card:hover,
+.VPHome .friend-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--vp-c-brand-1) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28) !important;
 }
