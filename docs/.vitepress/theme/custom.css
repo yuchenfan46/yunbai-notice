@@ -3,6 +3,11 @@
   --vp-c-brand-2: #3b82f6;
   --vp-c-brand-3: #60a5fa;
   --vp-c-brand-soft: rgba(37, 99, 235, 0.14);
+
+  /* 全局分割线与边框微弱化/透明化 */
+  --vp-c-divider: rgba(255, 255, 255, 0.08) !important;
+  --vp-c-border: rgba(255, 255, 255, 0.08) !important;
+  --vp-c-gutter: transparent !important;
 }
 
 .dark {
@@ -10,6 +15,10 @@
   --vp-c-brand-2: #3b82f6;
   --vp-c-brand-3: #2563eb;
   --vp-c-brand-soft: rgba(96, 165, 250, 0.14);
+
+  --vp-c-divider: rgba(255, 255, 255, 0.08) !important;
+  --vp-c-border: rgba(255, 255, 255, 0.08) !important;
+  --vp-c-gutter: transparent !important;
 }
 
 .warning-red {
@@ -61,7 +70,7 @@ button:focus,
   box-shadow: none !important;
 }
 
-/* 全局二次元背景壁纸 (来自云白接口) */
+/* 全局二次元背景壁纸 (来自云白接口) - 提升通透度和清晰度 */
 body::before {
   content: "";
   position: fixed;
@@ -75,13 +84,13 @@ body::before {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.45 !important;
+  opacity: 0.55 !important;
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
 .dark body::before {
-  opacity: 0.35 !important;
+  opacity: 0.45 !important;
 }
 
 /* 消除所有底层默认黑色背景，整站背景与文字容器全透明化 */
@@ -116,7 +125,7 @@ body,
   background-color: transparent !important;
 }
 
-/* 侧边栏全面透明，彻底消除双层色差 */
+/* 侧边栏全面透明，彻底去除右侧黑色/生硬边框线，消除断层 */
 .VPSidebar,
 aside.VPSidebar,
 .VPSidebarNav,
@@ -127,12 +136,13 @@ aside.VPSidebar,
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-right: none !important;
+  border: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-/* 顶部导航栏「服务平台」整行透明化并加入轻盈磨砂 */
+/* 顶部导航栏「服务平台」整行透明度与侧边栏/整体保持一致，去除底部粗黑线 */
 .VPNav,
 .VPNavBar,
 .VPNavBarTitle,
@@ -142,36 +152,63 @@ aside.VPSidebar,
 .VPNavScreen {
   background: transparent !important;
   background-color: transparent !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-bottom: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.title,
+.VPNavBarTitle .title,
+.VPNavBarTitle.has-sidebar .title {
+  border-bottom: none !important;
+  border: none !important;
 }
 
 .VPNav {
-  background: rgba(0, 0, 0, 0.18) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 :root:not(.dark) .VPNav {
-  background: rgba(255, 255, 255, 0.25) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-/* 保持正文区域文字可读性，给正文容器极淡的微透底色 */
+/* 正文标题边框与分割线全面优化：去除生硬黑线，改为极淡柔和半透线 */
+.vp-doc hr,
+hr {
+  border: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  margin: 24px 0 !important;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* 正文容器极淡透光磨砂衬底（可读性与壁纸通透兼备） */
 .VPDoc:not(.has-sidebar) .container,
 .VPDoc.has-sidebar .content-container {
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.18);
   padding: 24px;
-  border-radius: 14px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 :root:not(.dark) .VPDoc:not(.has-sidebar) .container,
 :root:not(.dark) .VPDoc.has-sidebar .content-container {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.4);
   padding: 24px;
-  border-radius: 14px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
