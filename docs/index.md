@@ -22,7 +22,7 @@ features:
     details: 提供云白综合云平台、API 接口管理（V1/V2）及专业在线客服系统。
   - icon: 🛡️
     title: 售后保障与技术指引
-    details: 包含香港机房纯净重装、网络声明及透明的退款与售后规范。
+    details: 包含机房纯净重装、网络声明及透明的退款与售后规范。
 ---
 
 <TimersSection />
